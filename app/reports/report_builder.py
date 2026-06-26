@@ -1,11 +1,8 @@
 def build_report(
     symbol,
     tf_report,
-    score,
-    breakdown,
-    grade,
+    decision,
     alignment,
-    confidence,
     pattern,
     sr,
     trade,
@@ -13,87 +10,78 @@ def build_report(
     volume
 ):
     """
-    Builds the Telegram analysis report.
+    Build the Telegram report.
     """
+
+    reasons_text = ""
+
+    for reason in decision["reasons"]:
+        reasons_text += f"• {reason}\n"
 
     report = f"""
 📊 {symbol}
 
-==============================
-📈 Multi-Timeframe Trend
-==============================
+Decision:
+{decision["action"]}
+
+Signal Score:
+{decision["score"]}/100
+
+Grade:
+{decision["grade"]}
+
+Confidence:
+{decision["confidence"]}%
+
+Multi Timeframe
 
 {tf_report}
 
-==============================
-⭐ Signal Score
-==============================
-
-Overall Score:
-{score}/100
-
-Grade:
-{grade}
-
 Trend:
-{breakdown['Trend']}/25
+{decision["breakdown"]["Trend"]}/25
 
 RSI:
-{breakdown['RSI']}/20
+{decision["breakdown"]["RSI"]}/20
 
 Volume:
-{breakdown['Volume']}/20
+{decision["breakdown"]["Volume"]}/20
 
 MTF:
-{breakdown['MTF']}/25
+{decision["breakdown"]["MTF"]}/25
 
 Pattern:
-{breakdown['Pattern']}/10
+{decision["breakdown"]["Pattern"]}/10
 
-==============================
-📊 Market Analysis
-==============================
-
-Alignment:
-{alignment}/4
-
-Confidence:
-{confidence}%
-
-Pattern:
+Pattern Detected:
 {pattern}
 
 Support:
-{sr['support']:.5f}
+{sr["support"]:.5f}
 
 Resistance:
-{sr['resistance']:.5f}
-
-==============================
-💰 Trade Setup
-==============================
+{sr["resistance"]:.5f}
 
 Entry:
-{trade['entry']:.5f}
+{trade["entry"]:.5f}
 
 Stop Loss:
-{trade['stop_loss']:.5f}
+{trade["stop_loss"]:.5f}
 
 Take Profit:
-{trade['take_profit']:.5f}
+{trade["take_profit"]:.5f}
 
 Risk Reward:
-{trade['risk_reward']}
-
-==============================
-📉 Volatility
-==============================
+{trade["risk_reward"]}
 
 ATR:
-{indicators.get('atr', 0):.2f}
+{indicators["atr"]:.2f}
 
 Volume:
-{volume['strength']}
+{volume["strength"]}
+
+Reasons:
+
+{reasons_text}
 """
 
     return report

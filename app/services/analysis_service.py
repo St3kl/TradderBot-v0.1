@@ -8,20 +8,14 @@ from app.risk.calculator import calculate_trade_levels
 
 from app.analysis.multi_timeframe import (
     analyze_timeframes,
-    calculate_alignment,
-    alignment_confidence
+    calculate_alignment
 )
 
 from app.analysis.volume import analyze_volume
 
-from app.analysis.scoring import (
-    calculate_score,
-    get_grade
-)
+from app.decision.engine import make_decision
 
-from app.reports.report_builder import (
-    build_report
-)
+from app.reports.report_builder import build_report
 
 
 def analyze_symbol(symbol):
@@ -29,7 +23,7 @@ def analyze_symbol(symbol):
     symbol = symbol.upper()
 
     # -----------------------------
-    # Load Market
+    # Load Market Data
     # -----------------------------
 
     if symbol.endswith("USDT"):
@@ -53,7 +47,7 @@ def analyze_symbol(symbol):
         mtf = None
 
     # -----------------------------
-    # Pattern
+    # Pattern Detection
     # -----------------------------
 
     pattern = detect_pattern(
@@ -61,7 +55,7 @@ def analyze_symbol(symbol):
     )
 
     # -----------------------------
-    # Volume
+    # Volume Analysis
     # -----------------------------
 
     if "volumes" in indicators:
@@ -70,16 +64,12 @@ def analyze_symbol(symbol):
             indicators["volumes"]
         )
 
-        volume_score = volume["score"]
-
     else:
 
         volume = {
             "strength": "N/A",
             "score": 10
         }
-
-        volume_score = 10
 
     # -----------------------------
     # Trend
@@ -91,7 +81,7 @@ def analyze_symbol(symbol):
     )
 
     # -----------------------------
-    # Support Resistance
+    # Support / Resistance
     # -----------------------------
 
     sr = find_support_resistance(
@@ -111,17 +101,13 @@ def analyze_symbol(symbol):
     )
 
     # -----------------------------
-    # Multi Timeframe
+    # Multi-Timeframe
     # -----------------------------
 
     if mtf:
 
         alignment = calculate_alignment(
             mtf
-        )
-
-        confidence = alignment_confidence(
-            alignment
         )
 
         tf_report = ""
@@ -137,40 +123,29 @@ def analyze_symbol(symbol):
 
         alignment = 0
 
-        confidence = 75
-
         tf_report = "Forex MTF Coming Soon\n"
 
     # -----------------------------
-    # Score
+    # Decision Engine
     # -----------------------------
 
-    score_data = calculate_score(
+    decision = make_decision(
         indicators,
         bullish,
-        volume_score,
+        volume,
         alignment,
         pattern
     )
 
-    score = score_data["score"]
-
-    grade = get_grade(score)
-
-    breakdown = score_data["breakdown"]
-
     # -----------------------------
-    # Report
+    # Build Report
     # -----------------------------
 
     report = build_report(
         symbol=symbol,
         tf_report=tf_report,
-        score=score,
-        breakdown=breakdown,
-        grade=grade,
+        decision=decision,
         alignment=alignment,
-        confidence=confidence,
         pattern=pattern,
         sr=sr,
         trade=trade,
