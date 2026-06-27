@@ -64,10 +64,12 @@ def get_forex_indicators(symbol="EUR/USD"):
     latest = df.iloc[-1]
 
     return {
-        "price": float(latest["close"]),
-        "ema50": float(latest["ema50"]),
-        "ema200": float(latest["ema200"]),
-        "rsi": float(latest["rsi"]),
-        "atr": atr,
-        "closes": closes
-    }
+    "price": float(latest["close"]),
+    "ema50": float(latest["ema50"]),
+    "ema200": float(latest["ema200"]),
+    "rsi": float(latest["rsi"]),
+    "atr": atr,
+    "closes": closes,
+    "highs": highs,
+    "lows": lows
+}

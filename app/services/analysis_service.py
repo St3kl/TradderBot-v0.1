@@ -17,6 +17,10 @@ from app.decision.engine import make_decision
 
 from app.reports.report_builder import build_report
 
+from app.market_structure.structure import (
+    analyze_structure
+)
+
 
 def analyze_symbol(symbol):
 
@@ -99,6 +103,13 @@ def analyze_symbol(symbol):
         bullish,
         indicators.get("atr", 0)
     )
+    
+    structure = analyze_structure(
+    indicators["highs"],
+    indicators["lows"],
+    indicators["closes"],
+    bullish
+)
 
     # -----------------------------
     # Multi-Timeframe
@@ -134,7 +145,8 @@ def analyze_symbol(symbol):
         bullish,
         volume,
         alignment,
-        pattern
+        pattern,
+        structure
     )
 
     # -----------------------------
@@ -142,15 +154,16 @@ def analyze_symbol(symbol):
     # -----------------------------
 
     report = build_report(
-        symbol=symbol,
-        tf_report=tf_report,
-        decision=decision,
-        alignment=alignment,
-        pattern=pattern,
-        sr=sr,
-        trade=trade,
-        indicators=indicators,
-        volume=volume
-    )
+    symbol=symbol,
+    tf_report=tf_report,
+    decision=decision,
+    alignment=alignment,
+    pattern=pattern,
+    sr=sr,
+    trade=trade,
+    indicators=indicators,
+    volume=volume,
+    structure=structure
+)
 
     return report

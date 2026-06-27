@@ -25,7 +25,8 @@ def make_decision(
     bullish,
     volume,
     alignment,
-    pattern
+    pattern,
+    structure
 ):
     """
     Main Decision Engine.

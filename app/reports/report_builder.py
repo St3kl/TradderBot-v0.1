@@ -7,7 +7,8 @@ def build_report(
     sr,
     trade,
     indicators,
-    volume
+    volume,
+    structure
 ):
     """
     Build the Telegram report.
@@ -78,6 +79,17 @@ ATR:
 
 Volume:
 {volume["strength"]}
+
+Market Structure
+
+Trend:
+{structure["trend"]}
+
+Break of Structure:
+{structure["bos"]["type"]}
+
+Change of Character:
+{structure["choch"]["type"]}
 
 Reasons:
 
