@@ -8,59 +8,43 @@ def build_report(
     trade,
     indicators,
     volume,
-    structure
+    structure,
+    smart_money
 ):
     """
     Build the Telegram report.
     """
 
-    reasons_text = ""
+    signals_text = ""
 
-    for reason in decision["reasons"]:
-        reasons_text += f"• {reason}\n"
+    for signal in decision["signals"]:
+        signals_text += f"✅ {signal}\n"
 
-    report = f"""
+    missing_text = ""
+
+    for item in decision["missing"]:
+        missing_text += f"❌ {item}\n"
+
+    if not missing_text:
+        missing_text = "None"
+
+    summary = f"""
 📊 {symbol}
 
-Decision:
+🎯 Decision:
 {decision["action"]}
 
-Signal Score:
+Score:
 {decision["score"]}/100
-
-Grade:
-{decision["grade"]}
 
 Confidence:
 {decision["confidence"]}%
 
-Multi Timeframe
+Risk:
+{decision["risk"]}
 
-{tf_report}
-
-Trend:
-{decision["breakdown"]["Trend"]}/25
-
-RSI:
-{decision["breakdown"]["RSI"]}/20
-
-Volume:
-{decision["breakdown"]["Volume"]}/20
-
-MTF:
-{decision["breakdown"]["MTF"]}/25
-
-Pattern:
-{decision["breakdown"]["Pattern"]}/10
-
-Pattern Detected:
-{pattern}
-
-Support:
-{sr["support"]:.5f}
-
-Resistance:
-{sr["resistance"]:.5f}
+Strength:
+{decision["strength"]}
 
 Entry:
 {trade["entry"]:.5f}
@@ -70,9 +54,22 @@ Stop Loss:
 
 Take Profit:
 {trade["take_profit"]:.5f}
+"""
 
-Risk Reward:
-{trade["risk_reward"]}
+    technical = f"""
+📈 TECHNICAL ANALYSIS
+
+Trend:
+{structure["trend"]}
+
+Pattern:
+{pattern}
+
+Support:
+{sr["support"]:.5f}
+
+Resistance:
+{sr["resistance"]:.5f}
 
 ATR:
 {indicators["atr"]:.2f}
@@ -80,20 +77,54 @@ ATR:
 Volume:
 {volume["strength"]}
 
-Market Structure
+Multi-Timeframe
 
-Trend:
-{structure["trend"]}
-
-Break of Structure:
-{structure["bos"]["type"]}
-
-Change of Character:
-{structure["choch"]["type"]}
-
-Reasons:
-
-{reasons_text}
+{tf_report}
 """
 
-    return report
+    smart = f"""
+🧠 SMART MONEY
+
+Equal Highs:
+{smart_money["liquidity"]["equal_highs"]}
+
+Equal Lows:
+{smart_money["liquidity"]["equal_lows"]}
+
+Bullish Order Blocks:
+{smart_money["order_blocks"]["bullish"]}
+
+Bearish Order Blocks:
+{smart_money["order_blocks"]["bearish"]}
+
+Bullish FVG:
+{smart_money["fair_value_gaps"]["bullish"]}
+
+Bearish FVG:
+{smart_money["fair_value_gaps"]["bearish"]}
+
+Premium / Discount:
+{smart_money["premium_discount"]["zone"]}
+
+Equilibrium:
+{smart_money["premium_discount"]["equilibrium"]:.2f}
+"""
+
+    confluence = f"""
+🎯 CONFLUENCE
+
+Signals
+
+{signals_text}
+
+Missing
+
+{missing_text}
+"""
+
+    return [
+        summary,
+        technical,
+        smart,
+        confluence
+    ]

@@ -1,122 +1,42 @@
-from app.analysis.scoring import (
-    calculate_score,
-    get_grade
-)
-
-from app.decision.actions import (
-    decide_action
-)
-
-from app.decision.confidence import (
-    calculate_confidence
-)
-
-from app.decision.filters import (
-    apply_filters
-)
-
-from app.decision.reasons import (
-    build_reasons
-)
-
-
-def make_decision(
-    indicators,
-    bullish,
-    volume,
-    alignment,
-    pattern,
-    structure
-):
+def make_decision(confluence):
     """
-    Main Decision Engine.
-
-    Returns everything needed to
-    evaluate a trading opportunity.
+    Converts confluence analysis
+    into a trading decision.
     """
 
-    volume_score = volume["score"]
+    score = confluence["score"]
 
-    atr = indicators.get("atr", 0)
+    if score >= 90:
 
-    # -----------------------------
-    # Apply Filters
-    # -----------------------------
+        action = "STRONG BUY"
 
-    passed, filter_messages = apply_filters(
-        indicators,
-        bullish,
-        volume_score,
-        alignment,
-        atr
-    )
+        confidence = 95
 
-    if not passed:
+        risk = "LOW"
 
-        return {
-            "action": "NO TRADE",
-            "score": 0,
-            "grade": "Avoid",
-            "confidence": 0,
-            "breakdown": {},
-            "reasons": filter_messages
-        }
+    elif score >= 75:
 
-    # -----------------------------
-    # Calculate Score
-    # -----------------------------
+        action = "BUY"
 
-    score_data = calculate_score(
-        indicators,
-        bullish,
-        volume_score,
-        alignment,
-        pattern
-    )
+        confidence = 85
 
-    score = score_data["score"]
+        risk = "MEDIUM"
 
-    breakdown = score_data["breakdown"]
+    elif score >= 60:
 
-    # -----------------------------
-    # Grade
-    # -----------------------------
+        action = "WATCH"
 
-    grade = get_grade(
-        score
-    )
+        confidence = 65
 
-    # -----------------------------
-    # Decision
-    # -----------------------------
+        risk = "MEDIUM"
 
-    action = decide_action(
-        score,
-        bullish
-    )
+    else:
 
-    # -----------------------------
-    # Confidence
-    # -----------------------------
+        action = "NO TRADE"
 
-    confidence = calculate_confidence(
-        score,
-        volume_score,
-        alignment,
-        bullish
-    )
+        confidence = 40
 
-    # -----------------------------
-    # Reasons
-    # -----------------------------
-
-    reasons = build_reasons(
-        indicators,
-        bullish,
-        volume,
-        alignment,
-        pattern
-    )
+        risk = "HIGH"
 
     return {
 
@@ -124,11 +44,14 @@ def make_decision(
 
         "score": score,
 
-        "grade": grade,
+        "strength": confluence["strength"],
 
         "confidence": confidence,
 
-        "breakdown": breakdown,
+        "risk": risk,
 
-        "reasons": reasons
+        "signals": confluence["signals"],
+
+        "missing": confluence["missing"]
+
     }

@@ -53,12 +53,29 @@ def analyze_smart_money(
 
     return {
 
-        "liquidity": liquidity,
+    "liquidity": {
 
-        "order_blocks": order_blocks,
+        "equal_highs": len(liquidity["equal_highs"]),
 
-        "fair_value_gaps": fvg,
+        "equal_lows": len(liquidity["equal_lows"])
 
-        "premium_discount": premium_discount
+    },
 
-    }
+    "order_blocks": {
+
+        "bullish": len(order_blocks["bullish"]),
+
+        "bearish": len(order_blocks["bearish"])
+
+    },
+
+    "fair_value_gaps": {
+
+        "bullish": len(fvg["bullish"]),
+
+        "bearish": len(fvg["bearish"])
+
+    },
+
+    "premium_discount": premium_discount
+}

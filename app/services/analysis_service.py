@@ -21,6 +21,13 @@ from app.market_structure.structure import (
     analyze_structure
 )
 
+from app.smart_money.engine import (
+    analyze_smart_money
+)
+
+from app.confluence.engine import (
+    calculate_confluence
+)
 
 def analyze_symbol(symbol):
 
@@ -33,15 +40,12 @@ def analyze_symbol(symbol):
     if symbol.endswith("USDT"):
 
         indicators = get_market_indicators(symbol)
-
         mtf = analyze_timeframes(symbol)
 
     else:
 
         forex_symbol = (
-            symbol[:3] +
-            "/" +
-            symbol[3:]
+            symbol[:3] + "/" + symbol[3:]
         )
 
         indicators = get_forex_indicators(
@@ -54,9 +58,7 @@ def analyze_symbol(symbol):
     # Pattern Detection
     # -----------------------------
 
-    pattern = detect_pattern(
-        indicators
-    )
+    pattern = detect_pattern(indicators)
 
     # -----------------------------
     # Volume Analysis
@@ -103,13 +105,33 @@ def analyze_symbol(symbol):
         bullish,
         indicators.get("atr", 0)
     )
-    
+
+    # -----------------------------
+    # Market Structure
+    # -----------------------------
+
     structure = analyze_structure(
-    indicators["highs"],
-    indicators["lows"],
-    indicators["closes"],
-    bullish
-)
+        indicators["highs"],
+        indicators["lows"],
+        indicators["closes"],
+        bullish
+    )
+
+    # -----------------------------
+    # Smart Money
+    # -----------------------------
+
+    smart_money = analyze_smart_money(
+        opens=indicators["opens"],
+        highs=indicators["highs"],
+        lows=indicators["lows"],
+        closes=indicators["closes"],
+        current_price=indicators["price"],
+        swing_high=sr["resistance"],
+        swing_low=sr["support"]
+    )
+
+    print(smart_money)
 
     # -----------------------------
     # Multi-Timeframe
@@ -133,37 +155,55 @@ def analyze_symbol(symbol):
     else:
 
         alignment = 0
-
         tf_report = "Forex MTF Coming Soon\n"
 
     # -----------------------------
-    # Decision Engine
+    # Confluence
+    # -----------------------------
+
+    confluence = calculate_confluence(
+        bullish,
+        pattern,
+        structure,
+        volume,
+        alignment,
+        smart_money
+    )
+
+    # -----------------------------
+    # Decision
     # -----------------------------
 
     decision = make_decision(
-        indicators,
-        bullish,
-        volume,
-        alignment,
-        pattern,
-        structure
+        confluence
     )
 
     # -----------------------------
     # Build Report
     # -----------------------------
+    print("Liquidity:", smart_money["liquidity"])
+    print("Order Blocks:", smart_money["order_blocks"])
+    print("FVG:", smart_money["fair_value_gaps"])
+    print("Premium:", smart_money["premium_discount"])
+    reports = build_report(
+        symbol=symbol,
+        tf_report=tf_report,
+        decision=decision,
+        alignment=alignment,
+        pattern=pattern,
+        sr=sr,
+        trade=trade,
+        indicators=indicators,
+        volume=volume,
+        structure=structure,
+        smart_money=smart_money
+    )
 
-    report = build_report(
-    symbol=symbol,
-    tf_report=tf_report,
-    decision=decision,
-    alignment=alignment,
-    pattern=pattern,
-    sr=sr,
-    trade=trade,
-    indicators=indicators,
-    volume=volume,
-    structure=structure
-)
+    # Debug
+    print(type(reports))
+    print(f"Number of reports: {len(reports)}")
 
-    return report
+    for i, r in enumerate(reports):
+        print(f"Report {i+1}: {len(r)} characters")
+
+    return reports

@@ -28,6 +28,11 @@ def get_market_indicators(
         for candle in data
     ]
     
+    opens = [
+    float(candle[1])
+    for candle in data
+]
+    
     volumes = [
     float(candle[5])
     for candle in data
@@ -80,5 +85,6 @@ def get_market_indicators(
     "closes": closes,
     "highs": highs,
     "lows": lows,
-    "volumes": volumes
+    "volumes": volumes,
+    "opens": opens,
 }

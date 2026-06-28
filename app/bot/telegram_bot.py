@@ -25,13 +25,17 @@ async def analyze(
 
     symbol = context.args[0].upper()
 
-    report = analyze_symbol(
-        symbol
-    )
+    reports = analyze_symbol(symbol)
 
-    await update.message.reply_text(
-        report
-    )
+    # Send each report as a separate Telegram message
+    for i, report in enumerate(reports):
+        print("=" * 50)
+    print(f"REPORT {i+1}")
+    print(f"Length: {len(report)}")
+    print(report[:500])  # Preview first 500 chars
+    print("=" * 50)
+
+    await update.message.reply_text(report)
 
 
 def build_bot(token):

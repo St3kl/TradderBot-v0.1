@@ -23,6 +23,11 @@ def get_forex_indicators(symbol="EUR/USD"):
         float(x["close"])
         for x in data["values"]
     ]
+    
+    opens = [
+    float(candle[1])
+    for candle in data
+]
 
     highs = [
         float(x["high"])
