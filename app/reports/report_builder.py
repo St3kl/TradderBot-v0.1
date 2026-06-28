@@ -110,6 +110,9 @@ Premium / Discount:
 
 Equilibrium:
 {smart_money["premium_discount"]["equilibrium"]:.2f}
+
+Liquidity Sweep:
+{smart_money["liquidity_sweep"]["type"]}
 """
 
     confluence = f"""

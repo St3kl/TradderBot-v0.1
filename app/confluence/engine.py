@@ -93,6 +93,23 @@ def calculate_confluence(
         signals.append("Bullish FVG")
     else:
         missing.append("Bullish FVG")
+    # -----------------------
+    # Liquidity Sweep
+    # -----------------------
+
+    if smart_money["liquidity_sweep"]["sell_side"]:
+
+        score += 10
+
+        signals.append(
+        "Sell Side Sweep"
+    )
+
+    else:
+
+        missing.append(
+        "Sell Side Sweep"
+    )    
 
     # -----------------------
     # Discount Zone
