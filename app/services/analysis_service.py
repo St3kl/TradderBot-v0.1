@@ -29,6 +29,10 @@ from app.confluence.engine import (
     calculate_confluence
 )
 
+import app.reports.report_builder as rb
+
+print(rb.__file__)
+
 def analyze_symbol(symbol):
 
     symbol = symbol.upper()
@@ -157,9 +161,11 @@ def analyze_symbol(symbol):
         alignment = 0
         tf_report = "Forex MTF Coming Soon\n"
 
-    # -----------------------------
+   # -----------------------------
     # Confluence
     # -----------------------------
+
+    print("Before calculate_confluence")
 
     confluence = calculate_confluence(
         bullish,
@@ -169,6 +175,9 @@ def analyze_symbol(symbol):
         alignment,
         smart_money
     )
+
+    print("After calculate_confluence")
+    print(confluence)
 
     # -----------------------------
     # Decision
@@ -181,10 +190,12 @@ def analyze_symbol(symbol):
     # -----------------------------
     # Build Report
     # -----------------------------
+
     print("Liquidity:", smart_money["liquidity"])
     print("Order Blocks:", smart_money["order_blocks"])
     print("FVG:", smart_money["fair_value_gaps"])
     print("Premium:", smart_money["premium_discount"])
+
     reports = build_report(
         symbol=symbol,
         tf_report=tf_report,
@@ -198,6 +209,8 @@ def analyze_symbol(symbol):
         structure=structure,
         smart_money=smart_money
     )
+
+    print(reports)
 
     # Debug
     print(type(reports))

@@ -1,3 +1,5 @@
+print("LOADING REPORT BUILDER")
+
 def build_report(
     symbol,
     tf_report,

@@ -48,11 +48,11 @@ def calculate_confluence(
     # Volume
     # -----------------------
 
-    if volume["score"] >= 15:
+    if "No" not in pattern:
         score += 10
-        signals.append("Strong Volume")
+        signals.append(pattern)
     else:
-        missing.append("Strong Volume")
+        missing.append("Pattern")
 
     # -----------------------
     # Pattern
