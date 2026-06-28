@@ -7,6 +7,8 @@ from ta.momentum import RSIIndicator
 from app.risk.atr import (
     calculate_atr
 )
+from ta.trend import ADXIndicator
+
 
 
 def get_market_indicators(
@@ -73,7 +75,12 @@ def get_market_indicators(
     atr = calculate_atr(
         df
     )
-
+    df["adx"] = ADXIndicator(
+    high=df["high"],
+    low=df["low"],
+    close=df["close"],
+    window=14
+).adx()
     latest = df.iloc[-1]
 
     return {
