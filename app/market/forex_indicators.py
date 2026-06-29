@@ -15,19 +15,12 @@ def get_forex_indicators(symbol="EUR/USD"):
     print(data)
 
     if "values" not in data:
-        raise Exception(
-            f"Forex API Error: {data}"
-        )
+        raise Exception(f"Forex API Error: {data}")
 
-    closes = [
-        float(x["close"])
+    opens = [
+        float(x["open"])
         for x in data["values"]
     ]
-    
-    opens = [
-    float(candle[1])
-    for candle in data
-]
 
     highs = [
         float(x["high"])
@@ -39,10 +32,16 @@ def get_forex_indicators(symbol="EUR/USD"):
         for x in data["values"]
     ]
 
+    closes = [
+        float(x["close"])
+        for x in data["values"]
+    ]
+
     # API returns newest candle first
-    closes.reverse()
+    opens.reverse()
     highs.reverse()
     lows.reverse()
+    closes.reverse()
 
     df = pd.DataFrame({
         "close": closes,
@@ -69,12 +68,13 @@ def get_forex_indicators(symbol="EUR/USD"):
     latest = df.iloc[-1]
 
     return {
-    "price": float(latest["close"]),
-    "ema50": float(latest["ema50"]),
-    "ema200": float(latest["ema200"]),
-    "rsi": float(latest["rsi"]),
-    "atr": atr,
-    "closes": closes,
-    "highs": highs,
-    "lows": lows
-}
+        "price": float(latest["close"]),
+        "ema50": float(latest["ema50"]),
+        "ema200": float(latest["ema200"]),
+        "rsi": float(latest["rsi"]),
+        "atr": atr,
+        "opens": opens,
+        "closes": closes,
+        "highs": highs,
+        "lows": lows
+    }
