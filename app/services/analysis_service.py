@@ -33,6 +33,10 @@ from app.validation.trade_validator import (
     validate_trade
 )
 
+from app.checklist.institutional_checklist import (
+    build_checklist
+)
+
 import app.reports.report_builder as rb
 
 print(rb.__file__)
@@ -149,6 +153,14 @@ def analyze_symbol(symbol):
     volume,
     indicators
     )
+    
+    checklist = build_checklist(
+    bullish,
+    structure,
+    smart_money,
+    volume,
+    trade
+)
     # -----------------------------
     # Multi-Timeframe
     # -----------------------------
@@ -220,7 +232,8 @@ def analyze_symbol(symbol):
         volume=volume,
         structure=structure,
         smart_money=smart_money,
-        validation=validation
+        validation=validation,
+        checklist=checklist
     )
 
     print(reports)

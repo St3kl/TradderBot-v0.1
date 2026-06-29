@@ -1,5 +1,6 @@
 print("LOADING REPORT BUILDER")
 
+
 def build_report(
     symbol,
     tf_report,
@@ -12,7 +13,8 @@ def build_report(
     volume,
     structure,
     smart_money,
-    validation
+    validation,
+    checklist
 ):
     """
     Build the Telegram report.
@@ -117,9 +119,14 @@ Premium / Discount:
 
 Equilibrium:
 {smart_money["premium_discount"]["equilibrium"]:.2f}
+"""
+
+    # Only show Liquidity Sweep if it exists
+    if "liquidity_sweep" in smart_money:
+        smart += f"""
 
 Liquidity Sweep:
-{smart_money["liquidity_sweep"]["type"]}
+{smart_money['liquidity_sweep']['type']}
 """
 
     confluence = f"""
@@ -152,11 +159,17 @@ Warnings:
 {"".join(f"⚠️ {w}\n" for w in validation["warnings"])}
 """
 
+    check = "📋 INSTITUTIONAL CHECKLIST\n\n"
+
+    for item, passed in checklist.items():
+        icon = "✅" if passed else "❌"
+        check += f"{icon} {item}\n"
 
     return [
         summary,
         technical,
         smart,
         confluence,
-        validation_report
+        validation_report,
+        check
     ]
