@@ -11,7 +11,8 @@ def build_report(
     indicators,
     volume,
     structure,
-    smart_money
+    smart_money,
+    validation
 ):
     """
     Build the Telegram report.
@@ -56,6 +57,12 @@ Stop Loss:
 
 Take Profit:
 {trade["take_profit"]:.5f}
+
+Setup Quality:
+{validation["quality"]}/100
+
+Trade Valid:
+{"YES ✅" if validation["valid"] else "NO ❌"}
 """
 
     technical = f"""
@@ -127,9 +134,29 @@ Missing
 {missing_text}
 """
 
+    validation_report = f"""
+🛡 TRADE VALIDATION
+
+Setup Quality:
+{validation["quality"]}/100
+
+Trade Valid:
+{"YES ✅" if validation["valid"] else "NO ❌"}
+
+Reasons:
+
+{"".join(f"✅ {r}\n" for r in validation["reasons"])}
+
+Warnings:
+
+{"".join(f"⚠️ {w}\n" for w in validation["warnings"])}
+"""
+
+
     return [
         summary,
         technical,
         smart,
-        confluence
+        confluence,
+        validation_report
     ]

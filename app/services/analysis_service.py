@@ -29,6 +29,10 @@ from app.confluence.engine import (
     calculate_confluence
 )
 
+from app.validation.trade_validator import (
+    validate_trade
+)
+
 import app.reports.report_builder as rb
 
 print(rb.__file__)
@@ -137,6 +141,14 @@ def analyze_symbol(symbol):
 
     print(smart_money)
 
+
+    validation = validate_trade(
+    trade,
+    smart_money,
+    structure,
+    volume,
+    indicators
+    )
     # -----------------------------
     # Multi-Timeframe
     # -----------------------------
@@ -207,7 +219,8 @@ def analyze_symbol(symbol):
         indicators=indicators,
         volume=volume,
         structure=structure,
-        smart_money=smart_money
+        smart_money=smart_money,
+        validation=validation
     )
 
     print(reports)
