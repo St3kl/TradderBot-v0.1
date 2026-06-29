@@ -14,6 +14,10 @@ from app.smart_money.premium_discount import (
     premium_discount_zone
 )
 
+from app.smart_money.liquidity_sweep import (
+    detect_liquidity_sweep
+)
+
 
 def analyze_smart_money(
     opens,
@@ -50,6 +54,13 @@ def analyze_smart_money(
         swing_high,
         swing_low
     )
+    
+    liquidity_sweep = detect_liquidity_sweep(
+    highs,
+    lows,
+    closes
+)
+    print(liquidity_sweep)
 
     return {
 
@@ -77,5 +88,8 @@ def analyze_smart_money(
 
     },
 
-    "premium_discount": premium_discount
+    "premium_discount": premium_discount,
+
+    "liquidity_sweep": liquidity_sweep
+
 }
