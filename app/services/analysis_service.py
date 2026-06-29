@@ -39,6 +39,8 @@ from app.checklist.institutional_checklist import (
 
 import app.reports.report_builder as rb
 
+from app.ai.narrator import build_market_story
+
 print(rb.__file__)
 
 def analyze_symbol(symbol):
@@ -154,13 +156,25 @@ def analyze_symbol(symbol):
     indicators
     )
     
+    story = build_market_story(
+    symbol,
+    decision,
+    structure,
+    smart_money,
+    pattern,
+    volume,
+    validation
+    )
+    
     checklist = build_checklist(
     bullish,
     structure,
     smart_money,
     volume,
     trade
-)
+    )
+    
+    
     # -----------------------------
     # Multi-Timeframe
     # -----------------------------

@@ -14,7 +14,8 @@ def build_report(
     structure,
     smart_money,
     validation,
-    checklist
+    checklist,
+    story=story
 ):
     """
     Build the Telegram report.
@@ -164,12 +165,18 @@ Warnings:
     for item, passed in checklist.items():
         icon = "✅" if passed else "❌"
         check += f"{icon} {item}\n"
+        
+    ai_report = f"""
+🤖 AI MARKET ANALYSIS
 
+{story}
+"""
     return [
         summary,
         technical,
         smart,
         confluence,
         validation_report,
-        check
+        check,
+        ai_report
     ]
