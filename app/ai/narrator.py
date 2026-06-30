@@ -1,74 +1,40 @@
-def build_market_story(
-    symbol,
-    decision,
-    structure,
-    smart_money,
-    pattern,
-    volume,
-    validation
-):
+def build_market_story(ai_context):
     """
-    Generates a professional market narrative.
+    Build the AI market narration from the AI context.
     """
 
-    story = []
+    symbol = ai_context["symbol"]
 
-    story.append(
-        f"{symbol} is currently in a {structure['trend'].lower()} market structure."
-    )
+    decision = ai_context["decision"]
 
-    if structure["bos"]["type"] == "Bullish BOS":
-        story.append(
-            "A bullish Break of Structure confirms buyers remain in control."
-        )
+    structure = ai_context["technical"]["trend"]
 
-    elif structure["bos"]["type"] == "Bearish BOS":
-        story.append(
-            "A bearish Break of Structure suggests sellers remain dominant."
-        )
+    pattern = ai_context["technical"]["pattern"]
 
-    zone = smart_money["premium_discount"]["zone"]
+    volume = ai_context["technical"]["volume"]
 
-    if zone == "Discount":
-        story.append(
-            "Price is trading inside the institutional discount zone."
-        )
-    else:
-        story.append(
-            "Price is trading in premium territory."
-        )
+    smart_money = ai_context["smart_money"]
 
-    if smart_money["order_blocks"]["bullish"] > 0:
-        story.append(
-            "Bullish order blocks are still active."
-        )
+    validation = ai_context["validation"]
 
-    if smart_money["fair_value_gaps"]["bullish"] > 0:
-        story.append(
-            "Bullish Fair Value Gaps remain unfilled."
-        )
+    story = f"""
+The current market for {symbol} is showing a {structure.lower()} market structure.
 
-    if volume["score"] >= 15:
-        story.append(
-            "Volume confirms participation."
-        )
+The decision engine recommends a {decision["action"]} setup with a confidence of
+{decision["confidence"]}% and an overall strength of
+{decision["strength"]}.
 
-    if pattern != "No Strong Pattern":
-        story.append(
-            f"The latest price action formed a {pattern}."
-        )
+Pattern detected:
+{pattern}
 
-    if validation["valid"]:
-        story.append(
-            "Overall, this setup satisfies the institutional checklist."
-        )
-    else:
-        story.append(
-            "Several institutional confirmations are still missing."
-        )
+Volume:
+{volume["strength"]}
 
-    story.append(
-        f"Current recommendation: {decision['action']}."
-    )
+Institutional zone:
+{smart_money["premium_discount"]["zone"]}
 
-    return " ".join(story)
+Trade Quality:
+{validation["quality"]}/100
+"""
+
+    return story.strip()
