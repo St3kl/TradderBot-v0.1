@@ -1,3 +1,6 @@
+from app.ai.reasoning import build_reasoning
+
+
 def build_ai_context(
     symbol,
     indicators,
@@ -20,7 +23,7 @@ def build_ai_context(
     dozens of individual variables.
     """
 
-    return {
+    context = {
 
         # -------------------------
         # Symbol
@@ -35,13 +38,9 @@ def build_ai_context(
         "market": {
 
             "price": indicators["price"],
-
             "ema50": indicators["ema50"],
-
             "ema200": indicators["ema200"],
-
             "rsi": indicators["rsi"],
-
             "atr": indicators["atr"]
 
         },
@@ -53,13 +52,9 @@ def build_ai_context(
         "technical": {
 
             "trend": structure["trend"],
-
             "pattern": pattern,
-
             "volume": volume,
-
             "alignment": alignment,
-
             "multi_timeframe": tf_report
 
         },
@@ -101,3 +96,11 @@ def build_ai_context(
         "checklist": checklist
 
     }
+
+    # -------------------------
+    # AI Reasoning
+    # -------------------------
+
+    context["reasoning"] = build_reasoning(context)
+
+    return context
