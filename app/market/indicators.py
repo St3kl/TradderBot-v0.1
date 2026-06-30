@@ -11,17 +11,26 @@ from ta.trend import ADXIndicator
 
 
 
-def get_market_indicators(
-    symbol="BTCUSDT",
-    interval="1h"
-):
+def get_market_indicators(symbol):
 
     url = (
         f"https://api.binance.com/api/v3/klines"
         f"?symbol={symbol}"
-        f"&interval={interval}"
+        f"&interval=1h"
         f"&limit=200"
     )
+
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+    except requests.exceptions.RequestException as e:
+        raise Exception(
+            f"Unable to connect to Binance:\n{e}"
+        )
+
+    # Continue with the rest of your code... 
 
     data = requests.get(url).json()
 
