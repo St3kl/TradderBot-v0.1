@@ -1,215 +1,120 @@
-"""
-Reasoning Engine
-
-Transforms the analysis results into structured reasoning that
-can later be consumed by any AI model (OpenAI, Ollama, DeepSeek,
-Claude, etc.).
-"""
-
-
 def build_reasoning(context):
     """
-    Generate structured reasoning from the complete AI context.
+    Converts market data into human reasoning.
 
-    Returns
-    -------
-    dict
-        {
-            bullish_arguments,
-            bearish_arguments,
-            missing_confirmations,
-            institutional_view,
-            trade_bias,
-            confidence
-        }
+    Returns a list of explanations that later become
+    the AI market story.
     """
 
-    bullish_arguments = []
-    bearish_arguments = []
-    missing_confirmations = []
+    reasoning = []
 
     market = context["market"]
     technical = context["technical"]
-    smart_money = context["smart_money"]
-    decision = context["decision"]
+    smart = context["smart_money"]
     validation = context["validation"]
-    checklist = context["checklist"]
+    decision = context["decision"]
 
-    # --------------------------------------------------
+    # ----------------------------------
     # Trend
-    # --------------------------------------------------
-
-    if market["ema50"] > market["ema200"]:
-        bullish_arguments.append(
-            "The 50 EMA is above the 200 EMA, confirming a bullish long-term trend."
-        )
-    else:
-        bearish_arguments.append(
-            "The 50 EMA remains below the 200 EMA, indicating a bearish long-term trend."
-        )
-        missing_confirmations.append(
-            "Bullish EMA crossover"
-        )
-
-    # --------------------------------------------------
-    # Structure
-    # --------------------------------------------------
+    # ----------------------------------
 
     if technical["trend"] == "Bullish":
-        bullish_arguments.append(
-            "Market structure is bullish."
+        reasoning.append(
+            "Market structure remains bullish."
         )
     else:
-        bearish_arguments.append(
-            "Market structure is bearish."
-        )
-        missing_confirmations.append(
-            "Bullish market structure"
+        reasoning.append(
+            "Market structure remains bearish."
         )
 
-    # --------------------------------------------------
-    # Pattern
-    # --------------------------------------------------
+    # ----------------------------------
+    # EMA
+    # ----------------------------------
 
-    pattern = technical["pattern"]
-
-    if pattern and pattern != "No Pattern":
-        bullish_arguments.append(
-            f"Detected chart pattern: {pattern}."
+    if market["ema50"] > market["ema200"]:
+        reasoning.append(
+            "The 50 EMA is above the 200 EMA, confirming trend continuation."
         )
     else:
-        missing_confirmations.append(
-            "High-confidence chart pattern"
+        reasoning.append(
+            "The 50 EMA is below the 200 EMA, suggesting bearish pressure."
         )
 
-    # --------------------------------------------------
+    # ----------------------------------
+    # RSI
+    # ----------------------------------
+
+    if market["rsi"] < 30:
+        reasoning.append(
+            "RSI indicates oversold conditions."
+        )
+
+    elif market["rsi"] > 70:
+        reasoning.append(
+            "RSI indicates overbought conditions."
+        )
+
+    else:
+        reasoning.append(
+            "RSI remains neutral."
+        )
+
+    # ----------------------------------
     # Volume
-    # --------------------------------------------------
+    # ----------------------------------
 
-    volume = technical["volume"]
-
-    if volume["score"] >= 15:
-        bullish_arguments.append(
-            "Volume supports the current move."
+    if technical["volume"]["score"] >= 15:
+        reasoning.append(
+            "Volume confirms participation."
         )
     else:
-        bearish_arguments.append(
-            "Volume confirmation is weak."
+        reasoning.append(
+            "Volume remains below institutional levels."
         )
 
-    # --------------------------------------------------
-    # Order Blocks
-    # --------------------------------------------------
+    # ----------------------------------
+    # Smart Money
+    # ----------------------------------
 
-    if smart_money["order_blocks"]["bullish"] > 0:
-        bullish_arguments.append(
+    if smart["order_blocks"]["bullish"] > 0:
+        reasoning.append(
             "Bullish Order Blocks are present."
         )
 
-    # --------------------------------------------------
-    # Fair Value Gaps
-    # --------------------------------------------------
-
-    if smart_money["fair_value_gaps"]["bullish"] > 0:
-        bullish_arguments.append(
+    if smart["fair_value_gaps"]["bullish"] > 0:
+        reasoning.append(
             "Bullish Fair Value Gaps remain open."
         )
 
-    # --------------------------------------------------
-    # Liquidity Sweep
-    # --------------------------------------------------
-
-    sweep = smart_money.get("liquidity_sweep", {})
-
-    if sweep.get("sell_side"):
-        bullish_arguments.append(
-            "A Sell-Side Liquidity Sweep suggests institutional accumulation."
+    if smart["liquidity_sweep"]["sell_side"]:
+        reasoning.append(
+            "Sell-side liquidity has been swept."
         )
 
-    if sweep.get("buy_side"):
-        bearish_arguments.append(
-            "A Buy-Side Liquidity Sweep suggests institutional distribution."
+    if smart["premium_discount"]["zone"] == "Discount":
+        reasoning.append(
+            "Price is trading inside the institutional discount zone."
         )
 
-    # --------------------------------------------------
-    # Premium / Discount
-    # --------------------------------------------------
-
-    zone = smart_money["premium_discount"]["zone"]
-
-    if zone == "Discount":
-        bullish_arguments.append(
-            "Price is trading in the Discount Zone."
-        )
-
-    elif zone == "Premium":
-        bearish_arguments.append(
-            "Price is trading in the Premium Zone."
-        )
-
-    # --------------------------------------------------
+    # ----------------------------------
     # Validation
-    # --------------------------------------------------
+    # ----------------------------------
 
     if validation["valid"]:
-        bullish_arguments.append(
-            "The trade passed the validation process."
+        reasoning.append(
+            "Trade validation passed institutional filters."
         )
     else:
-        bearish_arguments.append(
-            "The trade failed validation."
+        reasoning.append(
+            "Trade validation failed institutional filters."
         )
 
-    # --------------------------------------------------
-    # Institutional Checklist
-    # --------------------------------------------------
+    # ----------------------------------
+    # Final Decision
+    # ----------------------------------
 
-    failed = []
+    reasoning.append(
+        f"Final decision: {decision['action']}."
+    )
 
-    for item, passed in checklist.items():
-
-        if not passed:
-            failed.append(item)
-
-    missing_confirmations.extend(failed)
-
-    # --------------------------------------------------
-    # Institutional View
-    # --------------------------------------------------
-
-    if decision["action"] == "BUY":
-
-        institutional_view = (
-            "Institutional activity appears supportive of long positions."
-        )
-
-    elif decision["action"] == "SELL":
-
-        institutional_view = (
-            "Institutional activity appears supportive of short positions."
-        )
-
-    else:
-
-        institutional_view = (
-            "Institutional positioning remains neutral."
-        )
-
-    # --------------------------------------------------
-    # Output
-    # --------------------------------------------------
-
-    return {
-
-        "bullish_arguments": bullish_arguments,
-
-        "bearish_arguments": bearish_arguments,
-
-        "missing_confirmations": list(set(missing_confirmations)),
-
-        "institutional_view": institutional_view,
-
-        "trade_bias": decision["action"],
-
-        "confidence": decision["confidence"]
-    }
+    return reasoning

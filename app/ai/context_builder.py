@@ -1,4 +1,7 @@
 from app.ai.reasoning import build_reasoning
+from app.ai.reasoning_engine import build_reasoning
+from app.ai.reasoning import build_reasoning
+from app.ai.explainer import build_explanation
 
 
 def build_ai_context(
@@ -101,6 +104,45 @@ def build_ai_context(
     # AI Reasoning
     # -------------------------
 
+    context = {
+
+    "symbol": symbol,
+
+    "market": {
+
+        "price": indicators["price"],
+        "ema50": indicators["ema50"],
+        "ema200": indicators["ema200"],
+        "rsi": indicators["rsi"],
+        "atr": indicators["atr"]
+
+    },
+
+    "technical": {
+
+        "trend": structure["trend"],
+        "pattern": pattern,
+        "volume": volume,
+        "alignment": alignment,
+        "multi_timeframe": tf_report
+
+    },
+
+    "smart_money": smart_money,
+
+    "trade": trade,
+
+    "decision": decision,
+
+    "confluence": confluence,
+
+    "validation": validation,
+
+    "checklist": checklist
+
+}
+
     context["reasoning"] = build_reasoning(context)
+    context["explanation"] = build_explanation(context)
 
     return context
