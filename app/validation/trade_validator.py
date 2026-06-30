@@ -29,6 +29,9 @@ def validate_trade(
     # -----------------------------
 
     rr = trade["risk_reward"]
+    
+    print("RR:", rr)
+    print("RR TYPE:", type(rr))
 
     if rr < 2:
 

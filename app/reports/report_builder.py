@@ -15,11 +15,15 @@ def build_report(
     smart_money,
     validation,
     checklist,
-    story=story
+    story
 ):
     """
     Build the Telegram report.
     """
+
+    # ----------------------------------
+    # Confluence text
+    # ----------------------------------
 
     signals_text = ""
 
@@ -33,6 +37,27 @@ def build_report(
 
     if not missing_text:
         missing_text = "None"
+
+    # ----------------------------------
+    # Validation text
+    # ----------------------------------
+
+    reasons_text = ""
+
+    for reason in validation["reasons"]:
+        reasons_text += f"✅ {reason}\n"
+
+    warnings_text = ""
+
+    for warning in validation["warnings"]:
+        warnings_text += f"⚠️ {warning}\n"
+
+    if warnings_text == "":
+        warnings_text = "None"
+
+    # ----------------------------------
+    # Summary
+    # ----------------------------------
 
     summary = f"""
 📊 {symbol}
@@ -68,6 +93,10 @@ Trade Valid:
 {"YES ✅" if validation["valid"] else "NO ❌"}
 """
 
+    # ----------------------------------
+    # Technical
+    # ----------------------------------
+
     technical = f"""
 📈 TECHNICAL ANALYSIS
 
@@ -93,6 +122,10 @@ Multi-Timeframe
 
 {tf_report}
 """
+
+    # ----------------------------------
+    # Smart Money
+    # ----------------------------------
 
     smart = f"""
 🧠 SMART MONEY
@@ -122,13 +155,17 @@ Equilibrium:
 {smart_money["premium_discount"]["equilibrium"]:.2f}
 """
 
-    # Only show Liquidity Sweep if it exists
     if "liquidity_sweep" in smart_money:
+
         smart += f"""
 
 Liquidity Sweep:
-{smart_money['liquidity_sweep']['type']}
+{smart_money["liquidity_sweep"]["type"]}
 """
+
+    # ----------------------------------
+    # Confluence
+    # ----------------------------------
 
     confluence = f"""
 🎯 CONFLUENCE
@@ -142,6 +179,10 @@ Missing
 {missing_text}
 """
 
+    # ----------------------------------
+    # Validation
+    # ----------------------------------
+
     validation_report = f"""
 🛡 TRADE VALIDATION
 
@@ -153,24 +194,35 @@ Trade Valid:
 
 Reasons:
 
-{"".join(f"✅ {r}\n" for r in validation["reasons"])}
+{reasons_text}
 
 Warnings:
 
-{"".join(f"⚠️ {w}\n" for w in validation["warnings"])}
+{warnings_text}
 """
+
+    # ----------------------------------
+    # Institutional Checklist
+    # ----------------------------------
 
     check = "📋 INSTITUTIONAL CHECKLIST\n\n"
 
     for item, passed in checklist.items():
+
         icon = "✅" if passed else "❌"
+
         check += f"{icon} {item}\n"
-        
+
+    # ----------------------------------
+    # AI Narrator
+    # ----------------------------------
+
     ai_report = f"""
 🤖 AI MARKET ANALYSIS
 
 {story}
 """
+
     return [
         summary,
         technical,
