@@ -8,7 +8,7 @@ from app.risk.calculator import calculate_trade_levels
 
 from app.analysis.multi_timeframe import (
     analyze_timeframes,
-    calculate_alignment
+    calculate_alignment,
 )
 
 from app.analysis.volume import analyze_volume
@@ -27,6 +27,7 @@ from app.validation.trade_validator import validate_trade
 
 from app.checklist.institutional_checklist import build_checklist
 
+from app.ai.context_builder import build_ai_context
 from app.ai.narrator import build_market_story
 
 import app.reports.report_builder as rb
@@ -74,7 +75,7 @@ def analyze_symbol(symbol):
 
         volume = {
             "strength": "N/A",
-            "score": 10
+            "score": 10,
         }
 
     # ---------------------------------
@@ -87,9 +88,7 @@ def analyze_symbol(symbol):
     # Support / Resistance
     # ---------------------------------
 
-    sr = find_support_resistance(
-        indicators["closes"]
-    )
+    sr = find_support_resistance(indicators["closes"])
 
     # ---------------------------------
     # Trade Levels
@@ -100,7 +99,7 @@ def analyze_symbol(symbol):
         sr["support"],
         sr["resistance"],
         bullish,
-        indicators.get("atr", 0)
+        indicators.get("atr", 0),
     )
 
     # ---------------------------------
@@ -111,7 +110,7 @@ def analyze_symbol(symbol):
         indicators["highs"],
         indicators["lows"],
         indicators["closes"],
-        bullish
+        bullish,
     )
 
     # ---------------------------------
@@ -125,7 +124,7 @@ def analyze_symbol(symbol):
         closes=indicators["closes"],
         current_price=indicators["price"],
         swing_high=sr["resistance"],
-        swing_low=sr["support"]
+        swing_low=sr["support"],
     )
 
     print(smart_money)
@@ -164,7 +163,7 @@ def analyze_symbol(symbol):
         structure,
         volume,
         alignment,
-        smart_money
+        smart_money,
     )
 
     print("After calculate_confluence")
@@ -185,7 +184,7 @@ def analyze_symbol(symbol):
         smart_money,
         structure,
         volume,
-        indicators
+        indicators,
     )
 
     # ---------------------------------
@@ -197,22 +196,34 @@ def analyze_symbol(symbol):
         structure,
         smart_money,
         volume,
-        trade
+        trade,
+    )
+
+    # ---------------------------------
+    # AI Context Builder
+    # ---------------------------------
+
+    ai_context = build_ai_context(
+        symbol=symbol,
+        indicators=indicators,
+        decision=decision,
+        trade=trade,
+        structure=structure,
+        smart_money=smart_money,
+        pattern=pattern,
+        volume=volume,
+        validation=validation,
+        checklist=checklist,
+        tf_report=tf_report,
+        alignment=alignment,
+        confluence=confluence,
     )
 
     # ---------------------------------
     # AI Narrator
     # ---------------------------------
 
-    story = build_market_story(
-        symbol,
-        decision,
-        structure,
-        smart_money,
-        pattern,
-        volume,
-        validation
-    )
+    story = build_market_story(ai_context)
 
     # ---------------------------------
     # Debug
@@ -241,7 +252,7 @@ def analyze_symbol(symbol):
         smart_money=smart_money,
         validation=validation,
         checklist=checklist,
-        story=story
+        story=story,
     )
 
     # ---------------------------------
