@@ -15,7 +15,7 @@ from app.core.stages.ai_stage import AIStage
 from app.core.stages.report_stage import ReportStage
 from app.core.stages.volume_stage import VolumeStage
 from app.core.stages.multi_timeframe_stage import MultiTimeframeStage
-
+from app.core.stages.trade_stage import TradeStage
 
 class TradingEngine:
 
@@ -29,7 +29,7 @@ class TradingEngine:
         self.pipeline.add_step(TrendStage())
         self.pipeline.add_step(PatternStage())
         self.pipeline.add_step(SupportResistanceStage())
-        # self.pipeline.add_step(TradeStage())
+        self.pipeline.add_step(TradeStage()) 
         self.pipeline.add_step(StructureStage())
         self.pipeline.add_step(SmartMoneyStage())
         self.pipeline.add_step(VolumeStage())
