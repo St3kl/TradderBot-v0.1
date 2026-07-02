@@ -11,14 +11,17 @@ from ta.trend import ADXIndicator
 
 
 
-def get_market_indicators(symbol):
+def get_market_indicators(
+    symbol,
+    interval="1h"
+):
 
     url = (
-        f"https://api.binance.com/api/v3/klines"
-        f"?symbol={symbol}"
-        f"&interval=1h"
-        f"&limit=200"
-    )
+    "https://api.binance.com/api/v3/klines"
+    f"?symbol={symbol}"
+    f"&interval={interval}"
+    f"&limit=200"
+)
 
     try:
         response = requests.get(url, timeout=10)
@@ -32,7 +35,7 @@ def get_market_indicators(symbol):
 
     # Continue with the rest of your code... 
 
-    data = requests.get(url).json()
+
 
     closes = [
         float(candle[4])
@@ -97,6 +100,7 @@ def get_market_indicators(symbol):
     "ema50": float(latest["ema50"]),
     "ema200": float(latest["ema200"]),
     "rsi": float(latest["rsi"]),
+    "adx": float(latest["adx"]),
     "atr": atr,
     "closes": closes,
     "highs": highs,

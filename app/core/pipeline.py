@@ -12,6 +12,6 @@ class TradingPipeline:
 
         for step in self.steps:
 
-            step(session)
+            session = step.run(session)
 
         return session

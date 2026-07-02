@@ -8,6 +8,18 @@ class TradingSession:
 
     indicators: dict = field(default_factory=dict)
 
+    mtf: dict | None = None
+
+    pattern: str = ""
+
+    volume: dict = field(default_factory=dict)
+
+    bullish: bool = False
+
+    sr: dict = field(default_factory=dict)
+
+    trade: dict = field(default_factory=dict)
+
     structure: dict = field(default_factory=dict)
 
     smart_money: dict = field(default_factory=dict)
