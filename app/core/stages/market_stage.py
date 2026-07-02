@@ -12,11 +12,19 @@ class MarketStage:
 
         symbol = session.symbol
 
+        # -----------------------------
+        # Crypto
+        # -----------------------------
+
         if symbol.endswith("USDT"):
 
             session.indicators = get_market_indicators(symbol)
 
             session.mtf = analyze_timeframes(symbol)
+
+        # -----------------------------
+        # Forex
+        # -----------------------------
 
         else:
 
