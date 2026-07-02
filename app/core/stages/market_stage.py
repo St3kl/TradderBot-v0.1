@@ -1,10 +1,6 @@
 from app.market.indicators import get_market_indicators
 from app.market.forex_indicators import get_forex_indicators
 
-from app.analysis.multi_timeframe import (
-    analyze_timeframes,
-)
-
 
 class MarketStage:
 
@@ -12,19 +8,9 @@ class MarketStage:
 
         symbol = session.symbol
 
-        # -----------------------------
-        # Crypto
-        # -----------------------------
-
         if symbol.endswith("USDT"):
 
             session.indicators = get_market_indicators(symbol)
-
-            session.mtf = analyze_timeframes(symbol)
-
-        # -----------------------------
-        # Forex
-        # -----------------------------
 
         else:
 
@@ -33,8 +19,6 @@ class MarketStage:
             session.indicators = get_forex_indicators(
                 forex_symbol
             )
-
-            session.mtf = None
 
         print("✓ Market loaded")
 
