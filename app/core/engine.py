@@ -13,6 +13,7 @@ from app.core.stages.decision_stage import DecisionStage
 from app.core.stages.validation_stage import ValidationStage
 from app.core.stages.ai_stage import AIStage
 from app.core.stages.report_stage import ReportStage
+from app.core.stages.volume_stage import VolumeStage
 
 
 class TradingEngine:
@@ -30,6 +31,7 @@ class TradingEngine:
         # self.pipeline.add_step(TradeStage())
         self.pipeline.add_step(StructureStage())
         self.pipeline.add_step(SmartMoneyStage())
+        self.pipeline.add_step(VolumeStage())
         self.pipeline.add_step(ConfluenceStage())
         self.pipeline.add_step(DecisionStage())
         self.pipeline.add_step(ValidationStage())
