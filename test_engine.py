@@ -6,3 +6,4 @@ print(session.symbol)
 
 print(session.indicators.keys())
 print(session.bullish)
+print(session.sr)

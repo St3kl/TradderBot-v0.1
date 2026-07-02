@@ -13,6 +13,10 @@ from app.core.stages.report_stage import ReportStage
 
 from app.core.stages.trend_stage import TrendStage
 
+from app.core.stages.support_resistance_stage import (
+    SupportResistanceStage
+)
+
 class TradingEngine:
 
     def __init__(self):
@@ -21,6 +25,7 @@ class TradingEngine:
 
         self.pipeline.add_step(MarketStage())
         self.pipeline.add_step(PatternStage())
+        self.pipeline.add_step(SupportResistanceStage())
         self.pipeline.add_step(StructureStage())
         self.pipeline.add_step(SmartMoneyStage())
         self.pipeline.add_step(ConfluenceStage())
