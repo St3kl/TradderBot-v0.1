@@ -5,3 +5,4 @@ session = engine.analyze("BTCUSDT")
 print(session.symbol)
 
 print(session.indicators.keys())
+print(session.bullish)

@@ -11,6 +11,7 @@ from app.core.stages.validation_stage import ValidationStage
 from app.core.stages.ai_stage import AIStage
 from app.core.stages.report_stage import ReportStage
 
+from app.core.stages.trend_stage import TrendStage
 
 class TradingEngine:
 
@@ -27,6 +28,7 @@ class TradingEngine:
         self.pipeline.add_step(ValidationStage())
         self.pipeline.add_step(AIStage())
         self.pipeline.add_step(ReportStage())
+        self.pipeline.add_step(TrendStage())
 
     def analyze(self, symbol):
 
