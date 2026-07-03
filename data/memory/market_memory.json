@@ -1,0 +1,35 @@
+{
+    "BTCUSDT": {
+        "timestamp": "2026-07-03T23:20:31.918948",
+        "trend": {
+            "direction": "Bullish",
+            "bullish": true,
+            "strength": 1143.0679,
+            "confidence": 70
+        },
+        "bullish": true,
+        "price": 62651.19,
+        "confidence": 85,
+        "decision": {
+            "action": "WATCH",
+            "score": 65,
+            "strength": "Moderate",
+            "confidence": 65,
+            "risk": "MEDIUM",
+            "signals": [
+                "EMA Trend",
+                "Bullish Structure",
+                "Trend Continuation",
+                "Trend Continuation",
+                "Bullish Order Block",
+                "Bullish FVG"
+            ],
+            "missing": [
+                "Bullish BOS",
+                "MTF Alignment",
+                "Sell Side Sweep",
+                "Discount Zone"
+            ]
+        }
+    }
+}

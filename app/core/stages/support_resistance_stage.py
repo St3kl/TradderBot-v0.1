@@ -1,6 +1,4 @@
-from app.patterns.support_resistance import (
-    find_support_resistance
-)
+from app.patterns.support_resistance import find_support_resistance
 
 
 class SupportResistanceStage:
@@ -9,8 +7,10 @@ class SupportResistanceStage:
 
         print("Running Support/Resistance Stage")
 
-        session.sr = find_support_resistance(
+        levels = find_support_resistance(
             session.indicators["closes"]
         )
+
+        session.sr.update(levels)
 
         return session

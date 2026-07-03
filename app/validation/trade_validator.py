@@ -123,12 +123,14 @@ def validate_trade(
 
     return {
 
-        "valid": valid,
+    "valid": valid,
 
-        "quality": quality,
+    "confidence": quality,
 
-        "warnings": warnings,
+    "score": quality,
 
-        "reasons": reasons
+    "warnings": warnings,
 
-    }
+    "reasons": reasons
+
+}

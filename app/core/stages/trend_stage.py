@@ -1,32 +1,24 @@
-# from app.risk.calculator import calculate_trade_levels
-
-
-# class TradeStage:
-
-#     def run(self, session):
-
-#         print("Running Trade Stage")
-
-#         session.trade = calculate_trade_levels(
-#             price=session.indicators["price"],
-#             support=session.sr["support"],
-#             resistance=session.sr["resistance"],
-#             bullish=session.bullish,
-#             atr=session.indicators["atr"]
-#         )
-
-#         return session
-
 class TrendStage:
 
     def run(self, session):
 
         print("Running Trend Stage")
 
-        session.bullish = (
-            session.indicators["ema50"]
-            >
-            session.indicators["ema200"]
-        )
+        ema50 = session.indicators.get("ema50", 0)
+        ema200 = session.indicators.get("ema200", 0)
+
+        bullish = ema50 > ema200
+        direction = "Bullish" if bullish else "Bearish"
+
+        # Backward compatibility
+        session.bullish = bullish
+
+        # Update the trend section of the session
+        session.trend.update({
+            "direction": direction,
+            "bullish": bullish,
+            "strength": round(abs(ema50 - ema200), 4),
+            "confidence": 70
+        })
 
         return session

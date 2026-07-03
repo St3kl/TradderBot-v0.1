@@ -1,37 +1,159 @@
-from dataclasses import dataclass, field
-
-
-@dataclass
 class TradingSession:
 
-    symbol: str = ""
+    def __init__(self):
 
-    indicators: dict = field(default_factory=dict)
+        # --------------------------
+        # General
+        # --------------------------
 
-    mtf: dict | None = None
+        self.symbol = ""
 
-    pattern: str = ""
+        self.timestamp = None
 
-    volume: dict = field(default_factory=dict)
+        # --------------------------
+        # Market Data
+        # --------------------------
 
-    bullish: bool = False
+        self.indicators = {}
 
-    sr: dict = field(default_factory=dict)
+        self.mtf = {}
 
-    trade: dict = field(default_factory=dict)
+        # --------------------------
+        # Trend
+        # --------------------------
 
-    structure: dict = field(default_factory=dict)
+        self.trend = {
+            "direction": "Unknown",
+            "bullish": False,
+            "strength": 0,
+            "confidence": 0
+        }
 
-    smart_money: dict = field(default_factory=dict)
+        # Compatibility
+        self.bullish = False
 
-    confluence: dict = field(default_factory=dict)
+        # --------------------------
+        # Pattern Analysis
+        # --------------------------
 
-    decision: dict = field(default_factory=dict)
+        self.patterns = {
+            "detected": [],
+            "primary": None,
+            "confidence": 0
+        }
 
-    validation: dict = field(default_factory=dict)
+        # --------------------------
+        # Market Structure
+        # --------------------------
 
-    checklist: dict = field(default_factory=dict)
+        self.structure = {
+            "trend": "Unknown",
+            "bos": False,
+            "choch": False
+        }
 
-    ai_context: dict = field(default_factory=dict)
+        # --------------------------
+        # Smart Money
+        # --------------------------
 
-    reports: list = field(default_factory=list)
+        self.smart_money = {
+            "order_blocks": [],
+            "fvg": [],
+            "liquidity": [],
+            "score": 0
+        }
+
+        # --------------------------
+        # Volume
+        # --------------------------
+
+        self.volume = {
+            "status": "Unknown",
+            "strength": 0
+        }
+
+        # --------------------------
+        # Support / Resistance
+        # --------------------------
+
+        self.sr = {
+            "support": None,
+            "resistance": None
+        }
+
+        # --------------------------
+        # Trade
+        # --------------------------
+
+        self.trade = {
+            "entry": None,
+            "stop_loss": None,
+            "take_profit": None,
+            "risk_reward": 0
+        }
+
+        # --------------------------
+        # Confluence
+        # --------------------------
+
+        self.confluence = {
+            "score": 0,
+            "signals": []
+        }
+
+        # --------------------------
+        # Decision
+        # --------------------------
+
+        self.decision = {
+            "action": "WAIT",
+            "confidence": 0
+        }
+
+        # --------------------------
+        # Validation
+        # --------------------------
+
+        self.validation = {
+            "valid": False,
+            "confidence": 0,
+            "score": 0,
+            "reasons": []
+        }
+
+        # --------------------------
+        # Checklist
+        # --------------------------
+
+        self.checklist = {
+            "passed": [],
+            "failed": []
+        }
+
+        # --------------------------
+        # Reports
+        # --------------------------
+
+        self.tf_report = {}
+
+        self.report = ""
+
+        # --------------------------
+        # AI
+        # --------------------------
+
+        self.ai_context = {}
+
+        self.ai_reasoning = []
+
+        self.ai_prompt = ""
+
+        self.ai_response = ""
+
+        self.ai_report = ""
+
+        # --------------------------
+        # Memory
+        # --------------------------
+
+        self.memory = {}
