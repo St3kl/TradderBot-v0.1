@@ -16,6 +16,7 @@ from app.core.stages.report_stage import ReportStage
 from app.core.stages.volume_stage import VolumeStage
 from app.core.stages.multi_timeframe_stage import MultiTimeframeStage
 from app.core.stages.trade_stage import TradeStage
+from app.core.stages.checklist_stage import ChecklistStage
 
 class TradingEngine:
 
@@ -37,6 +38,7 @@ class TradingEngine:
         self.pipeline.add_step(ConfluenceStage())
         self.pipeline.add_step(DecisionStage())
         self.pipeline.add_step(ValidationStage())
+        self.pipeline.add_step(ChecklistStage())
         self.pipeline.add_step(AIStage())
         self.pipeline.add_step(ReportStage())
 
