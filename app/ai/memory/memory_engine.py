@@ -2,7 +2,14 @@ from app.ai.memory.market_memory import (
     save_market_snapshot,
     load_market_snapshot
 )
-from app.ai.memory.comparator import compare_sessions
+
+from app.ai.memory.comparator import (
+    compare_sessions
+)
+
+from app.ai.memory.evolution import (
+    analyze_market_evolution
+)
 
 
 class MemoryEngine:
@@ -14,13 +21,12 @@ class MemoryEngine:
     def load(self, symbol):
 
         return load_market_snapshot(symbol)
-    
+
     def compare(self, symbol):
 
         history = self.load(symbol)
 
         if len(history) < 2:
-
             return None
 
         previous = history[-2]
@@ -30,6 +36,11 @@ class MemoryEngine:
             previous,
             current
         )
-        
-        
-    
+
+    def evolution(self, symbol):
+
+        history = self.load(symbol)
+
+        return analyze_market_evolution(
+            history
+        )
