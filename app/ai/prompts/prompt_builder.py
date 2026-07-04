@@ -79,6 +79,14 @@ REASONING
         prompt += f"- {line}\n"
 
     prompt += """
+    
+=== Historical Context ===
+
+Previous Analysis:
+{comparison}
+
+Market Evolution:
+{evolution}    
 
 ==================================================
 TASK

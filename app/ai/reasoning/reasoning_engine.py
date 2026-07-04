@@ -12,6 +12,9 @@ def build_reasoning(context):
     validation = context["validation"]
     decision = context["decision"]
 
+    comparison = context.get("comparison")
+    evolution = context.get("evolution")
+
     # ---------------------------------
     # Trend
     # ---------------------------------
@@ -114,14 +117,91 @@ def build_reasoning(context):
     )
 
     # ---------------------------------
+    # Historical Comparison
+    # ---------------------------------
+
+    if comparison:
+
+        if comparison["price_change"] > 0:
+
+            reasoning.append(
+                f"Price has increased by {comparison['price_change']} since the previous analysis."
+            )
+
+        elif comparison["price_change"] < 0:
+
+            reasoning.append(
+                f"Price has decreased by {abs(comparison['price_change'])} since the previous analysis."
+            )
+
+        if comparison["confidence_change"] > 0:
+
+            reasoning.append(
+                "Trading confidence has improved compared to the previous analysis."
+            )
+
+        elif comparison["confidence_change"] < 0:
+
+            reasoning.append(
+                "Trading confidence has weakened compared to the previous analysis."
+            )
+
+        if comparison["decision_changed"]:
+
+            reasoning.append(
+                "The recommended trading action has changed since the previous analysis."
+            )
+
+    # ---------------------------------
+    # Market Evolution
+    # ---------------------------------
+
+    if evolution:
+
+        reasoning.append(
+            f"Market evolution indicates a {evolution['price_trend'].lower()} price trend."
+        )
+
+        reasoning.append(
+            f"Confidence is {evolution['confidence_trend'].lower()} over recent analyses."
+        )
+
+        if evolution["trend_stable"]:
+
+            reasoning.append(
+                "The overall trend has remained stable."
+            )
+
+        else:
+
+            reasoning.append(
+                "The market trend has recently changed."
+            )
+
+        if evolution["decision_stable"]:
+
+            reasoning.append(
+                "Trading decisions have remained consistent."
+            )
+
+        else:
+
+            reasoning.append(
+                "Trading recommendations have changed during recent analyses."
+            )
+
+    # ---------------------------------
     # Validation
     # ---------------------------------
 
     if validation["valid"]:
+
         reasoning.append(
             "The trade setup passed all validation filters."
         )
+
     else:
+
         reasoning.append(
             "The trade setup failed one or more validation filters."
         )
