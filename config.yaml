@@ -1,0 +1,33 @@
+account:
+
+  balance: 10000
+
+  currency: USD
+
+risk:
+
+  risk_per_trade: 1
+
+  max_portfolio_risk: 5
+
+  max_directional_risk: 3
+
+execution:
+
+  minimum_confirmations: 4
+
+  minimum_validation_score: 70
+
+scanner:
+
+  interval: 60
+
+paper:
+
+  enabled: true
+
+exchange:
+
+  name: Binance
+
+  testnet: true
