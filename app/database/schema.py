@@ -33,6 +33,8 @@ def create_tables():
 
         symbol TEXT,
 
+        direction TEXT,
+
         entry REAL,
 
         stop_loss REAL,
@@ -41,13 +43,21 @@ def create_tables():
 
         position_size REAL,
 
+        risk_amount REAL,
+
         status TEXT,
 
-        pnl REAL,
+        confidence INTEGER,
 
         opened_at TEXT,
 
-        closed_at TEXT
+        closed_at TEXT,
+
+        exit_price REAL,
+
+        pnl REAL,
+
+        result TEXT
 
     )
 
