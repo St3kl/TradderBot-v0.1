@@ -1,35 +1,76 @@
 {
-    "BTCUSDT": {
-        "timestamp": "2026-07-03T23:20:31.918948",
-        "trend": {
-            "direction": "Bullish",
+    "BTCUSDT": [
+        {
+            "timestamp": "2026-07-03T23:20:31.918948",
+            "trend": {
+                "direction": "Bullish",
+                "bullish": true,
+                "strength": 1143.0679,
+                "confidence": 70
+            },
             "bullish": true,
-            "strength": 1143.0679,
-            "confidence": 70
+            "price": 62651.19,
+            "confidence": 85,
+            "decision": {
+                "action": "WATCH",
+                "score": 65,
+                "strength": "Moderate",
+                "confidence": 65,
+                "risk": "MEDIUM",
+                "signals": [
+                    "EMA Trend",
+                    "Bullish Structure",
+                    "Trend Continuation",
+                    "Trend Continuation",
+                    "Bullish Order Block",
+                    "Bullish FVG"
+                ],
+                "missing": [
+                    "Bullish BOS",
+                    "MTF Alignment",
+                    "Sell Side Sweep",
+                    "Discount Zone"
+                ]
+            }
         },
-        "bullish": true,
-        "price": 62651.19,
-        "confidence": 85,
-        "decision": {
-            "action": "WATCH",
-            "score": 65,
-            "strength": "Moderate",
-            "confidence": 65,
-            "risk": "MEDIUM",
-            "signals": [
-                "EMA Trend",
-                "Bullish Structure",
-                "Trend Continuation",
-                "Trend Continuation",
-                "Bullish Order Block",
-                "Bullish FVG"
-            ],
-            "missing": [
-                "Bullish BOS",
-                "MTF Alignment",
-                "Sell Side Sweep",
-                "Discount Zone"
-            ]
+        {
+            "timestamp": "2026-07-04T12:09:12.795516",
+            "trend": {
+                "direction": "Bullish",
+                "bullish": true,
+                "strength": 1216.601,
+                "confidence": 70
+            },
+            "bullish": true,
+            "price": 62550.0,
+            "confidence": 100,
+            "decision": {
+                "action": "NO TRADE",
+                "score": 50,
+                "strength": "Weak",
+                "confidence": 40,
+                "risk": "HIGH",
+                "signals": [
+                    "EMA Trend",
+                    "Trend Continuation",
+                    "Trend Continuation",
+                    "Bullish Order Block",
+                    "Bullish FVG"
+                ],
+                "missing": [
+                    "Bullish Structure",
+                    "Bullish BOS",
+                    "MTF Alignment",
+                    "Sell Side Sweep",
+                    "Discount Zone"
+                ]
+            },
+            "trade": {
+                "entry": 62550.0,
+                "stop_loss": 62254.97571,
+                "take_profit": 63140.04857,
+                "risk_reward": 2.0
+            }
         }
-    }
+    ]
 }
