@@ -24,7 +24,7 @@ class TradeRepository:
 
         VALUES(?,?,?,?,?,?,?,?,?,?)
 
-        """,(
+        """, (
 
             trade["symbol"],
             trade["direction"],
@@ -48,6 +48,62 @@ class TradeRepository:
         FROM paper_trades
 
         WHERE status='OPEN'
+
+        """)
+
+        return [dict(r) for r in rows]
+
+    def get_all_trades(self):
+
+        rows = db.fetchall("""
+
+        SELECT *
+
+        FROM paper_trades
+
+        ORDER BY id
+
+        """)
+
+        return [dict(r) for r in rows]
+
+    def get_closed_trades(self):
+
+        rows = db.fetchall("""
+
+        SELECT *
+
+        FROM paper_trades
+
+        WHERE status='CLOSED'
+
+        """)
+
+        return [dict(r) for r in rows]
+
+    def get_winning_trades(self):
+
+        rows = db.fetchall("""
+
+        SELECT *
+
+        FROM paper_trades
+
+        WHERE result='WIN'
+
+        """)
+
+        return [dict(r) for r in rows]
+
+    def get_losing_trades(self):
+
+        rows = db.fetchall("""
+
+        SELECT *
+
+        FROM paper_trades
+
+        WHERE result='LOSS'
 
         """)
 
