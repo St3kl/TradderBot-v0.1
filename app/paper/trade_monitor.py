@@ -61,13 +61,46 @@ class TradeMonitor:
 
     def close_trade(self, trade, exit_price, result):
 
+        risk = trade["risk_amount"]
+
+        if result == "WIN":
+
+            pnl = risk * 2
+
+        else:
+
+            pnl = -risk
+
+        self.repo.close_trade(
+
+            trade["id"],
+
+            exit_price,
+
+            pnl,
+
+            result
+
+        )
+
         print()
-        print("================================")
-        print("Closing Trade")
-        print("================================")
-        print(f"Symbol : {trade['symbol']}")
-        print(f"Result : {result}")
-        print(f"Exit   : {exit_price}")
-        print(f"Opened : {trade['opened_at']}")
-        print(f"Closed : {datetime.utcnow()}")
+
+        print("=========================")
+
+        print("TRADE CLOSED")
+
+        print("=========================")
+
+        print("Trade :", trade["id"])
+
+        print("Symbol:", trade["symbol"])
+
+        print("Result:", result)
+
+        print("Exit  :", exit_price)
+
+        print("PnL   :", pnl)
+
+        print("Closed:", datetime.utcnow())
+
         print()

@@ -108,3 +108,38 @@ class TradeRepository:
         """)
 
         return [dict(r) for r in rows]
+
+    def close_trade(
+        self,
+        trade_id,
+        exit_price,
+        pnl,
+        result
+    ):
+
+        db.execute("""
+
+        UPDATE paper_trades
+
+        SET
+
+            status='CLOSED',
+
+            exit_price=?,
+
+            pnl=?,
+
+            result=?,
+
+            closed_at=datetime('now')
+
+        WHERE id=?
+
+        """, (
+
+            exit_price,
+            pnl,
+            result,
+            trade_id
+
+        ))
