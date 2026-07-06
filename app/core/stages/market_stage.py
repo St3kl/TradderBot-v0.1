@@ -1,5 +1,6 @@
 from app.market.indicators import get_market_indicators
 from app.market.forex_indicators import get_forex_indicators
+from app.market.regime_engine import RegimeEngine
 
 
 class MarketStage:
@@ -19,6 +20,12 @@ class MarketStage:
             session.indicators = get_forex_indicators(
                 forex_symbol
             )
+        regime = RegimeEngine()
+
+        session.market_regime = regime.classify(
+            session.indicators
+            )   
+
 
         print("✓ Market loaded")
 

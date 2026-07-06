@@ -73,7 +73,9 @@ def build_ai_context(session):
         # Historical Memory
         "comparison": comparison,
 
-        "evolution": evolution
+        "evolution": evolution,
+        
+        "market_regime": session.market_regime,
     }
 
     # ---------------------------------
