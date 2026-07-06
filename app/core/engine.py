@@ -17,6 +17,7 @@ from app.core.stages.volume_stage import VolumeStage
 from app.core.stages.multi_timeframe_stage import MultiTimeframeStage
 from app.core.stages.trade_stage import TradeStage
 from app.core.stages.checklist_stage import ChecklistStage
+from app.core.stages.strategy_stage import StrategyStage
 
 class TradingEngine:
 
@@ -27,6 +28,7 @@ class TradingEngine:
 
         # Register all stages in execution order
         self.pipeline.add_step(MarketStage())
+        self.pipeline.add_step(StrategyStage())
         self.pipeline.add_step(TrendStage())
         self.pipeline.add_step(PatternStage())
         self.pipeline.add_step(SupportResistanceStage())
