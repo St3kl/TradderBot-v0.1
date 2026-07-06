@@ -86,6 +86,10 @@ class TradeMonitor:
 
         )
         
+        trade["exit_price"] = exit_price
+        trade["pnl"] = pnl
+        trade["result"] = result
+
         dispatcher.dispatch(
             TRADE_CLOSED,
             trade
