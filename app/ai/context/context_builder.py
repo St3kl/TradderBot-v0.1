@@ -91,6 +91,16 @@ def build_ai_context(session):
     performance = PerformanceEngine()
 
     context["performance"] = performance.build()
+    
+    from app.ai.memory.confidence_engine import ConfidenceEngine
+
+    confidence_engine = ConfidenceEngine()
+
+    context["confidence_calibration"] = confidence_engine.calibrate(
+
+    session.decision["confidence"]
+
+)
 
     # ---------------------------------
     # Similar Historical Trade
@@ -106,3 +116,4 @@ def build_ai_context(session):
     context["similar_trade"] = similar_trade
 
     return context
+
