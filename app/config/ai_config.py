@@ -1,18 +1,29 @@
 import os
 
-# LM Studio Configuration
-LM_STUDIO_HOST = os.getenv("LM_STUDIO_HOST", "127.0.0.1")
-LM_STUDIO_PORT = int(os.getenv("LM_STUDIO_PORT", "12345"))
+# AI Provider
 
-LM_STUDIO_URL = (
-    f"http://{LM_STUDIO_HOST}:{LM_STUDIO_PORT}/v1/chat/completions"
-)
+AI_PROVIDER = "lmstudio"
 
-MODEL_NAME = os.getenv(
-    "LM_STUDIO_MODEL",
-    "meta-llama-3.1-8b-instruct"
-)
+# OpenAI
+
+OPENAI_MODEL = "gpt-4.1"
+
+# LM Studio
+
+LMSTUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"
+
+LMSTUDIO_MODEL = "meta-llama-3.1-8b-instruct"
+
+# Ollama
+
+OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
+
+OLLAMA_MODEL = "llama3.1"
+
+# Common Parameters
 
 TEMPERATURE = 0.2
-MAX_TOKENS = 700
+
+MAX_TOKENS = 512
+
 TIMEOUT = 300

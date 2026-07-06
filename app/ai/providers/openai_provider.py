@@ -1,9 +1,20 @@
-from app.ai.providers.base_provider import BaseProvider
+class OpenAIProvider:
 
+    def ask(self, prompt):
 
-class OpenAIProvider(BaseProvider):
+        return """
+Market Summary:
+Placeholder
 
-    def generate(self, prompt: str) -> str:
-        raise NotImplementedError(
-            "OpenAI provider not implemented yet."
-        )
+Trade Validation:
+Placeholder
+
+Risk Assessment:
+Placeholder
+
+Institutional Opinion:
+Placeholder
+
+Final Recommendation:
+WATCH
+"""

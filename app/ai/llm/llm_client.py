@@ -6,6 +6,7 @@ LM_STUDIO_URL = "http://127.0.0.1:12345/v1/chat/completions"
 MODEL_NAME = "meta-llama-3.1-8b-instruct"
 
 
+
 def ask_lmstudio(prompt: str):
 
     payload = {
@@ -73,11 +74,12 @@ def ask_lmstudio(prompt: str):
 
     return data["choices"][0]["message"]["content"]
 
-from app.ai.providers.lmstudio_provider import LMStudioProvider
+from app.ai.providers.provider_manager import ProviderManager
 
-provider = LMStudioProvider()
+
+manager = ProviderManager()
 
 
 def ask_llm(prompt):
 
-    return provider.generate(prompt)
+    return manager.ask(prompt)
