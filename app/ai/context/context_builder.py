@@ -1,4 +1,6 @@
 from app.ai.memory.memory_engine import MemoryEngine
+from app.ai.memory.similarity_engine import SimilarityEngine
+from app.ai.memory.vector_engine import VectorEngine
 
 
 def build_ai_context(session):
@@ -72,7 +74,35 @@ def build_ai_context(session):
         "comparison": comparison,
 
         "evolution": evolution
-
     }
+
+    # ---------------------------------
+    # Feature Vector
+    # ---------------------------------
+
+    vector_engine = VectorEngine()
+
+    current_vector = vector_engine.build(context)
+
+    context["vector"] = current_vector
+    
+    from app.ai.memory.performance_engine import PerformanceEngine
+
+    performance = PerformanceEngine()
+
+    context["performance"] = performance.build()
+
+    # ---------------------------------
+    # Similar Historical Trade
+    # ---------------------------------
+
+    similarity = SimilarityEngine()
+
+    similar_trade = similarity.find_similar(
+        session.symbol,
+        current_vector
+    )
+
+    context["similar_trade"] = similar_trade
 
     return context
