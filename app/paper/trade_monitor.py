@@ -2,6 +2,9 @@ from datetime import datetime
 
 from app.database.repositories.trade_repository import TradeRepository
 
+from app.core.events import dispatcher
+from app.events.trade_events import TRADE_CLOSED
+
 
 class TradeMonitor:
 
@@ -81,6 +84,11 @@ class TradeMonitor:
 
             result
 
+        )
+        
+        dispatcher.dispatch(
+            TRADE_CLOSED,
+            trade
         )
 
         print()
