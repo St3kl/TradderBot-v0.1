@@ -1,13 +1,16 @@
 from datetime import datetime
 
 from app.database.repositories.trade_repository import TradeRepository
+from app.database.services.trade_service import TradeService
+
+
 
 
 class PaperTradingEngine:
 
     def __init__(self):
 
-        self.repo = TradeRepository()
+        self.trade_service = TradeService()
 
     def open_trade(
         self,
@@ -50,6 +53,6 @@ class PaperTradingEngine:
 
         }
 
-        self.repo.create_trade(trade)
+        self.trade_service.open_trade(trade)
 
         return trade
