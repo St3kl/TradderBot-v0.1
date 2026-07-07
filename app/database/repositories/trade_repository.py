@@ -15,7 +15,6 @@ class TradeRepository:
         stop_loss,
         take_profit,
         position_size,
-        "strategy": session.strategy
         risk_amount,
         confidence,
         strategy,

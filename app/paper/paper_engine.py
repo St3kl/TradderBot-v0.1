@@ -10,22 +10,19 @@ class PaperTradingEngine:
         self.repo = TradeRepository()
 
     def open_trade(
-
         self,
-
         session,
-
         execution
-
     ):
 
         if not execution["execute"]:
-
             return None
 
         trade = {
 
             "symbol": session.symbol,
+
+            "strategy": session.strategy,
 
             "direction": (
                 "LONG"
