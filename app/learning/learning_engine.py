@@ -1,5 +1,6 @@
 from app.learning.statistics import Statistics
 from app.learning.performance import Performance
+from app.learning.strategy_statistics import StrategyStatistics
 
 
 class LearningEngine:
@@ -8,6 +9,7 @@ class LearningEngine:
 
         self.stats = Statistics()
         self.performance = Performance()
+        self.strategy = StrategyStatistics()
 
     def report(self):
 
@@ -36,6 +38,8 @@ class LearningEngine:
 
             "average_pnl": self.performance.average_pnl(),
 
-            "total_pnl": self.performance.total_pnl()
+            "total_pnl": self.performance.total_pnl(),
+            
+            "strategies": self.strategy.summary()
 
         }

@@ -76,6 +76,8 @@ def build_ai_context(session):
         "evolution": evolution,
         
         "market_regime": session.market_regime,
+        
+        "strategy": session.strategy,
     }
 
     # ---------------------------------

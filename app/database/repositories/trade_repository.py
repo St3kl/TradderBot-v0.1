@@ -7,37 +7,40 @@ class TradeRepository:
 
         db.execute("""
 
-        INSERT INTO paper_trades(
+    INSERT INTO paper_trades(
 
-            symbol,
-            direction,
-            entry,
-            stop_loss,
-            take_profit,
-            position_size,
-            risk_amount,
-            confidence,
-            status,
-            opened_at
+        symbol,
+        direction,
+        entry,
+        stop_loss,
+        take_profit,
+        position_size,
+        "strategy": session.strategy
+        risk_amount,
+        confidence,
+        strategy,
+        status,
+        opened_at
 
-        )
+    )
 
-        VALUES(?,?,?,?,?,?,?,?,?,?)
+    VALUES(?,?,?,?,?,?,?,?,?,?,?)
 
-        """, (
+    """, (
 
-            trade["symbol"],
-            trade["direction"],
-            trade["entry"],
-            trade["stop_loss"],
-            trade["take_profit"],
-            trade["position_size"],
-            trade["risk_amount"],
-            trade["confidence"],
-            "OPEN",
-            trade["opened_at"]
+        trade["symbol"],
+        trade["direction"],
+        trade["entry"],
+        trade["stop_loss"],
+        trade["take_profit"],
+        trade["position_size"],
+        trade["risk_amount"],
+        trade["confidence"],
+        trade["strategy"],
+        "OPEN",
+        trade["opened_at"]
 
-        ))
+    ))
 
     def get_open_trades(self):
 
