@@ -1,53 +1,17 @@
-from app.ai.memory.memory_engine import MemoryEngine
-from app.learning.strategy_statistics import StrategyStatistics
-from app.learning.market_statistics import MarketStatistics
-from app.learning.ai_statistics import AIStatistics
-from app.learning.confidence_engine import ConfidenceEngine
-from app.learning.recommendation_engine import RecommendationEngine
-from app.learning.vector_updater import VectorUpdater
+from app.testing.base_test import BaseTest
 
 
-class LearningEngine:
-    """
-    Central orchestrator for the learning subsystem.
+class TestLearning(BaseTest):
 
-    Every completed trade passes through this engine.
-    """
+    def run(self):
 
-    def __init__(self):
+        self.title("LEARNING ENGINE")
 
-        self.memory = MemoryEngine()
+        trade = self.trade()
 
-        self.strategy_statistics = StrategyStatistics()
+        result = self.learning.learn(trade)
 
-        self.market_statistics = MarketStatistics()
+        self.show(result)
 
-        self.ai_statistics = AIStatistics()
 
-        self.confidence_engine = ConfidenceEngine()
-
-        self.recommendation_engine = RecommendationEngine()
-
-        self.vector_updater = VectorUpdater()
-
-    def learn(self, trade):
-
-        print("\n========== LEARNING ENGINE ==========")
-
-        self.memory.store(trade)
-
-        self.strategy_statistics.update(trade)
-
-        self.market_statistics.update(trade)
-
-        self.ai_statistics.update(trade)
-
-        self.confidence_engine.update(trade)
-
-        self.vector_updater.update(trade)
-
-        recommendation = self.recommendation_engine.generate()
-
-        print("Learning Complete")
-
-        return recommendation
+TestLearning().run()

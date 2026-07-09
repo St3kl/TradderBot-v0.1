@@ -24,11 +24,21 @@ class PaperTradingEngine:
 
             "strategy": session.strategy,
 
-            "market_regime": session.market_regime.get("regime", "UNKNOWN"),
+            "market_regime": session.market_regime.get(
+                "regime",
+                "UNKNOWN"
+            ),
 
-            "volatility": session.market_regime.get("volatility", "UNKNOWN"),
+            "volatility": session.market_regime.get(
+                "volatility",
+                "UNKNOWN"
+            ),
 
-            "session_name": getattr(session, "session_name", "UNKNOWN"),
+            "session_name": getattr(
+                session,
+                "session_name",
+                "UNKNOWN"
+            ),
 
             "direction": (
                 "LONG"
@@ -57,5 +67,44 @@ class PaperTradingEngine:
         }
 
         self.trade_service.open_trade(trade)
+
+        return trade
+
+    def close_trade(
+        self,
+        trade,
+        exit_price,
+        result
+    ):
+
+        entry = trade["entry"]
+
+        direction = trade["direction"]
+
+        if direction == "LONG":
+
+            pnl = exit_price - entry
+
+        else:
+
+            pnl = entry - exit_price
+
+        self.trade_service.close_trade(
+
+            trade["id"],
+
+            exit_price,
+
+            pnl,
+
+            result
+
+        )
+
+        trade["exit_price"] = exit_price
+
+        trade["pnl"] = pnl
+
+        trade["result"] = result
 
         return trade
