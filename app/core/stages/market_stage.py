@@ -40,6 +40,7 @@ class MarketStage:
 
         session.strategy = selector.select(
             session.market_regime
+            
         )
 
         print("Market Regime:", session.market_regime)

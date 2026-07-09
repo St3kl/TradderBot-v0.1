@@ -1,7 +1,25 @@
-from pprint import pprint
-
 from app.learning.learning_engine import LearningEngine
 
 engine = LearningEngine()
 
-pprint(engine.report())
+trade = {
+
+    "symbol": "BTCUSDT",
+
+    "strategy": "Trend Following",
+
+    "result": "WIN",
+
+    "market_regime": {
+
+        "regime": "TRENDING",
+
+        "volatility": "HIGH"
+
+    },
+
+    "confidence": 82
+
+}
+
+print(engine.learn(trade))

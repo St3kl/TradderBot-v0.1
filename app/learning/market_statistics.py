@@ -1,7 +1,14 @@
 from app.database.database import db
 
 
-class StrategyStatistics:
+class MarketStatistics:
+    """
+    Learns how the bot performs under different market regimes.
+    """
+
+    def update(self, trade):
+
+        print("Updating Market Statistics")
 
     def summary(self):
 
@@ -9,7 +16,9 @@ class StrategyStatistics:
 
         SELECT
 
-            strategy,
+            market_regime,
+
+            volatility,
 
             COUNT(*) AS total,
 
@@ -31,9 +40,11 @@ class StrategyStatistics:
 
         FROM paper_trades
 
-        WHERE strategy IS NOT NULL
+        WHERE market_regime IS NOT NULL
 
-        GROUP BY strategy
+        GROUP BY market_regime, volatility
+
+        ORDER BY market_regime
 
         """)
 
@@ -47,18 +58,17 @@ class StrategyStatistics:
 
             losses = row["losses"] or 0
 
-            if total:
+            win_rate = round(
 
-                win_rate = round(
-                    wins / total * 100,
-                    2
-                )
+                (wins / total) * 100,
 
-            else:
+                2
 
-                win_rate = 0
+            ) if total else 0
 
-            report[row["strategy"]] = {
+            key = f"{row['market_regime']} | {row['volatility']}"
+
+            report[key] = {
 
                 "wins": wins,
 
@@ -71,13 +81,3 @@ class StrategyStatistics:
             }
 
         return report
-
-    def update(self, trade):
-        """
-        Learning hook.
-
-        For now, statistics are computed directly from the
-        database, so no incremental update is required.
-        """
-
-        print("Updating Strategy Statistics")

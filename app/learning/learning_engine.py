@@ -1,45 +1,53 @@
-from app.learning.statistics import Statistics
-from app.learning.performance import Performance
+from app.ai.memory.memory_engine import MemoryEngine
 from app.learning.strategy_statistics import StrategyStatistics
+from app.learning.market_statistics import MarketStatistics
+from app.learning.ai_statistics import AIStatistics
+from app.learning.confidence_engine import ConfidenceEngine
+from app.learning.recommendation_engine import RecommendationEngine
+from app.learning.vector_updater import VectorUpdater
 
 
 class LearningEngine:
+    """
+    Central orchestrator for the learning subsystem.
+
+    Every completed trade passes through this engine.
+    """
 
     def __init__(self):
 
-        self.stats = Statistics()
-        self.performance = Performance()
-        self.strategy = StrategyStatistics()
+        self.memory = MemoryEngine()
 
-    def report(self):
+        self.strategy_statistics = StrategyStatistics()
 
-        wins = self.stats.wins()
-        losses = self.stats.losses()
+        self.market_statistics = MarketStatistics()
 
-        total = wins + losses
+        self.ai_statistics = AIStatistics()
 
-        if total:
+        self.confidence_engine = ConfidenceEngine()
 
-            win_rate = round((wins / total) * 100, 2)
+        self.recommendation_engine = RecommendationEngine()
 
-        else:
+        self.vector_updater = VectorUpdater()
 
-            win_rate = 0
+    def learn(self, trade):
 
-        return {
+        print("\n========== LEARNING ENGINE ==========")
 
-            "total_trades": self.stats.total_trades(),
+        self.memory.store(trade)
 
-            "wins": wins,
+        self.strategy_statistics.update(trade)
 
-            "losses": losses,
+        self.market_statistics.update(trade)
 
-            "win_rate": win_rate,
+        self.ai_statistics.update(trade)
 
-            "average_pnl": self.performance.average_pnl(),
+        self.confidence_engine.update(trade)
 
-            "total_pnl": self.performance.total_pnl(),
-            
-            "strategies": self.strategy.summary()
+        self.vector_updater.update(trade)
 
-        }
+        recommendation = self.recommendation_engine.generate()
+
+        print("Learning Complete")
+
+        return recommendation

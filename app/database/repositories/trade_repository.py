@@ -18,12 +18,15 @@ class TradeRepository:
         risk_amount,
         confidence,
         strategy,
+        market_regime,
+        volatility,
+        session_name,
         status,
         opened_at
 
     )
 
-    VALUES(?,?,?,?,?,?,?,?,?,?,?)
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 
     """, (
 
@@ -36,6 +39,9 @@ class TradeRepository:
         trade["risk_amount"],
         trade["confidence"],
         trade["strategy"],
+        trade["market_regime"],
+        trade["volatility"],
+        trade["session_name"],
         "OPEN",
         trade["opened_at"]
 

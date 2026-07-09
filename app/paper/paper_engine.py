@@ -1,9 +1,6 @@
 from datetime import datetime
 
-from app.database.repositories.trade_repository import TradeRepository
 from app.database.services.trade_service import TradeService
-
-
 
 
 class PaperTradingEngine:
@@ -26,6 +23,12 @@ class PaperTradingEngine:
             "symbol": session.symbol,
 
             "strategy": session.strategy,
+
+            "market_regime": session.market_regime.get("regime", "UNKNOWN"),
+
+            "volatility": session.market_regime.get("volatility", "UNKNOWN"),
+
+            "session_name": getattr(session, "session_name", "UNKNOWN"),
 
             "direction": (
                 "LONG"
