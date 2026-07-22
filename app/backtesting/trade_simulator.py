@@ -13,7 +13,7 @@ class TradeSimulator:
         sl = trade["stop_loss"]
         tp = trade["take_profit"]
 
-        if direction == "LONG":
+        if direction == "SHORT":
 
             if low <= sl:
 

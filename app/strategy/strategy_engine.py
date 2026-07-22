@@ -1,3 +1,5 @@
+from app.strategy.registry import StrategyRegistry
+
 from app.strategy.trend_strategy import TrendStrategy
 from app.strategy.range_strategy import RangeStrategy
 from app.strategy.breakout_strategy import BreakoutStrategy
@@ -8,24 +10,32 @@ class StrategyEngine:
 
     def __init__(self):
 
-        self.strategies = {
+        self.registry = StrategyRegistry()
 
-            "TREND": TrendStrategy(),
+        # Register all available strategies
+        self.registry.register(TrendStrategy())
+        self.registry.register(RangeStrategy())
+        self.registry.register(BreakoutStrategy())
+        self.registry.register(ReversalStrategy())
 
-            "RANGE": RangeStrategy(),
+    # --------------------------------
 
-            "BREAKOUT": BreakoutStrategy(),
+    def evaluate(self, session):
 
-            "REVERSAL": ReversalStrategy()
-
-        }
-
-    def execute(self, session):
-
-        strategy = self.strategies.get(session.strategy)
+        strategy = self.registry.get(session.strategy)
 
         if strategy is None:
 
+            print(f"Unknown strategy: {session.strategy}")
+
+            session.decision = {
+
+                "action": "NO TRADE",
+                "strategy": "NONE",
+                "confidence": 0
+
+            }
+
             return session
 
-        return strategy.execute(session)
+        return strategy.evaluate(session)

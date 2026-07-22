@@ -1,27 +1,28 @@
-from datetime import datetime
+from app.market.data.downloader import BinanceDownloader
+from app.market.data.repository import MarketDataRepository
 
-from pprint import pprint
+repo = MarketDataRepository()
+downloader = BinanceDownloader()
 
-from app.database.repositories.market_repository import MarketRepository
+df = downloader.download(
+    "BTCUSDT",
+    "1h",
+    100
+)
 
-repo = MarketRepository()
+filename = repo.save(
+    "BTCUSDT",
+    "1h",
+    df
+)
 
-repo.save_snapshot({
+print(filename)
 
-    "symbol":"BTCUSDT",
+loaded = repo.load(
+    "BTCUSDT",
+    "1h"
+)
 
-    "timestamp":datetime.utcnow().isoformat(),
+print(loaded.head())
 
-    "price":62500,
-
-    "trend":"Bullish",
-
-    "confidence":85,
-
-    "decision":"BUY"
-
-})
-
-history = repo.get_history("BTCUSDT")
-
-pprint(history)
+print(len(loaded))

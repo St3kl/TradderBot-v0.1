@@ -1,9 +1,14 @@
-from app.ai.memory.confidence_engine import ConfidenceEngine
+from types import SimpleNamespace
+
+from app.decision.confidence_engine import ConfidenceEngine
+
+session = SimpleNamespace()
+
+session.confluence = {"confidence":40}
+session.validation = {"confidence":90}
+session.trend = {"confidence":70}
+session.ai = {"confidence":80}
 
 engine = ConfidenceEngine()
 
-print(
-
-    engine.calibrate(80)
-
-)
+print(engine.calculate(session))

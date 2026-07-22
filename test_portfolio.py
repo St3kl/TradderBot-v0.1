@@ -1,24 +1,12 @@
-from app.risk.portfolio import calculate_portfolio_risk
+from app.portfolio.portfolio import Portfolio
 
-portfolio = [
+class Trade:
+    pnl = 250
 
-    {
-        "symbol":"BTCUSDT",
-        "risk":100
-    },
+portfolio = Portfolio()
 
-    {
-        "symbol":"ETHUSDT",
-        "risk":75
-    },
+print(portfolio.summary())
 
-    {
-        "symbol":"SOLUSDT",
-        "risk":50
-    }
+portfolio.apply_trade(Trade())
 
-]
-
-report = calculate_portfolio_risk(portfolio)
-
-print(report)
+print(portfolio.summary())

@@ -1,142 +1,141 @@
+from app.confluence.trend_score import calculate_trend_score
+from app.confluence.pattern_score import calculate_pattern_score
+from app.confluence.smart_money_score import calculate_smart_money_score
+from app.confluence.volume_score import calculate_volume_score
+from app.confluence.timeframe_score import calculate_timeframe_score
+from app.confluence.risk_score import calculate_risk_score
+
+
 def calculate_confluence(
     bullish,
     pattern,
     structure,
     volume,
     alignment,
-    smart_money
+    smart_money,
+    validation=None,
 ):
     """
-    Build a complete confluence score.
+    Institutional Confluence Engine
+
+    Every scoring module is evaluated independently and
+    then aggregated into a final institutional score.
     """
 
-    score = 0
-    signals = []
-    missing = []
+    validation = validation or {
+        "valid": False
+    }
 
-    # -----------------------
-    # EMA Trend
-    # -----------------------
-
-    if bullish:
-        score += 10
-        signals.append("EMA Trend")
-    else:
-        missing.append("EMA Trend")
-
-    # -----------------------
-    # Market Structure
-    # -----------------------
-
-    if structure["trend"] == "Bullish":
-        score += 15
-        signals.append("Bullish Structure")
-    else:
-        missing.append("Bullish Structure")
-
-    # -----------------------
-    # Break of Structure
-    # -----------------------
-
-    if structure["bos"]["type"] == "Bullish BOS":
-        score += 15
-        signals.append("Bullish BOS")
-    else:
-        missing.append("Bullish BOS")
-
-    # -----------------------
-    # Volume
-    # -----------------------
-
-    if "No" not in pattern:
-        score += 10
-        signals.append(pattern)
-    else:
-        missing.append("Pattern")
-
-    # -----------------------
-    # Pattern
-    # -----------------------
-
-    if pattern != "No Pattern":
-        score += 10
-        signals.append(pattern)
-    else:
-        missing.append("Pattern")
-
-    # -----------------------
-    # Multi-Timeframe
-    # -----------------------
-
-    if alignment >= 3:
-        score += 10
-        signals.append("MTF Alignment")
-    else:
-        missing.append("MTF Alignment")
-
-    # -----------------------
-    # Bullish Order Blocks
-    # -----------------------
-
-    if smart_money["order_blocks"]["bullish"] > 0:
-        score += 10
-        signals.append("Bullish Order Block")
-    else:
-        missing.append("Bullish Order Block")
-
-    # -----------------------
-    # Bullish Fair Value Gaps
-    # -----------------------
-
-    if smart_money["fair_value_gaps"]["bullish"] > 0:
-        score += 10
-        signals.append("Bullish FVG")
-    else:
-        missing.append("Bullish FVG")
-    # -----------------------
-    # Liquidity Sweep
-    # -----------------------
-
-    if smart_money["liquidity_sweep"]["sell_side"]:
-
-        score += 10
-
-        signals.append(
-        "Sell Side Sweep"
+    trend = calculate_trend_score(
+        bullish,
+        structure
     )
 
-    else:
+    pattern_result = calculate_pattern_score(
+        pattern
+    )
 
-        missing.append(
-        "Sell Side Sweep"
-    )    
+    smart_money_result = calculate_smart_money_score(
+        smart_money
+    )
 
-    # -----------------------
-    # Discount Zone
-    # -----------------------
+    volume_result = calculate_volume_score(
+        volume
+    )
 
-    if smart_money["premium_discount"]["zone"] == "Discount":
-        score += 10
-        signals.append("Discount Zone")
-    else:
-        missing.append("Discount Zone")
+    timeframe_result = calculate_timeframe_score(
+        alignment
+    )
 
-    # -----------------------
-    # Strength
-    # -----------------------
+    risk_result = calculate_risk_score(
+        validation
+    )
 
-    if score >= 90:
+    modules = [
+
+        trend,
+        pattern_result,
+        smart_money_result,
+        volume_result,
+        timeframe_result,
+        risk_result
+
+    ]
+
+    total_score = sum(
+        module["score"]
+        for module in modules
+    )
+
+    signals = []
+
+    missing = []
+
+    for module in modules:
+
+        signals.extend(
+            module["signals"]
+        )
+
+        missing.extend(
+            module["missing"]
+        )
+
+    # ---------------------------------------
+    # Overall Strength
+    # ---------------------------------------
+
+    if total_score >= 85:
+
         strength = "Very Strong"
-    elif score >= 75:
+
+    elif total_score >= 70:
+
         strength = "Strong"
-    elif score >= 60:
+
+    elif total_score >= 55:
+
         strength = "Moderate"
-    else:
+
+    elif total_score >= 40:
+
         strength = "Weak"
 
+    else:
+
+        strength = "Very Weak"
+
+    confidence = min(
+        total_score,
+        100
+    )
+
     return {
-        "score": score,
+
+        "score": total_score,
+
+        "confidence": confidence,
+
         "strength": strength,
+
         "signals": signals,
-        "missing": missing
+
+        "missing": missing,
+
+        "modules": {
+
+            "trend": trend,
+
+            "pattern": pattern_result,
+
+            "smart_money": smart_money_result,
+
+            "volume": volume_result,
+
+            "timeframe": timeframe_result,
+
+            "risk": risk_result
+
+        }
+
     }

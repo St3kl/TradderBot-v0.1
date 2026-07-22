@@ -1,4 +1,5 @@
 from app.confluence.engine import calculate_confluence
+# from app.analysis.confluence.engine import calculate_confluence
 
 
 class ConfluenceStage:
@@ -8,12 +9,13 @@ class ConfluenceStage:
         print("Running Confluence Stage")
 
         session.confluence = calculate_confluence(
-            bullish=session.bullish,
-            pattern=session.pattern,
-            structure=session.structure,
-            volume=session.volume,
-            alignment=session.alignment,
-            smart_money=session.smart_money
+        bullish=session.bullish,
+        pattern=session.pattern,
+        structure=session.structure,
+        volume=session.volume,
+        alignment=session.alignment,
+        smart_money=session.smart_money,
+        validation=session.validation
         )
 
         return session

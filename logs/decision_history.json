@@ -1,0 +1,74 @@
+[
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    },
+    {
+        "symbol": "BTCUSDT",
+        "decision": {
+            "action": "WAIT",
+            "reason": "Low Confidence",
+            "confidence": 27.5
+        },
+        "confidence": 27.5
+    }
+]

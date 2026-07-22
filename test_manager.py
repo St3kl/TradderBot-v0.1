@@ -1,32 +1,17 @@
-from app.core.registry import engine
-from app.execution.execution_manager import ExecutionManager
+from app.market.data.manager import MarketDataManager
 
-session = engine.analyze("BTCUSDT")
+manager = MarketDataManager()
 
-manager = ExecutionManager()
+df = manager.get_dataset(
 
-portfolio = [
+    "BTCUSDT",
 
-    {
-        "symbol":"BTC",
-        "direction":"LONG",
-        "risk":100
-    }
+    "1H",
 
-]
-
-report = manager.evaluate(
-
-    session=session,
-
-    balance=10000,
-
-    risk_percent=1,
-
-    open_positions=portfolio
+    limit=250
 
 )
 
-from pprint import pprint
+print(df.head())
 
-pprint(report)
+print(len(df))

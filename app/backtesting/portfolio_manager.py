@@ -6,40 +6,44 @@ class PortfolioManager:
     def __init__(self, initial_balance=10000):
 
         self.initial_balance = initial_balance
-
         self.balance = initial_balance
-
         self.equity = initial_balance
-
         self.peak_equity = initial_balance
-
         self.max_drawdown = 0.0
 
-    # --------------------------
+    # ------------------------------------
+    # Compatibility
+    # ------------------------------------
+
+    def update(self, trade):
+        """
+        EventBus compatibility.
+        """
+
+        self.apply_trade(trade)
+
+    # ------------------------------------
     # Apply Closed Trade
-    # --------------------------
+    # ------------------------------------
 
     def apply_trade(self, trade):
 
         pnl = trade.get("pnl", 0)
 
         self.balance += pnl
-
         self.equity = self.balance
 
         if self.equity > self.peak_equity:
-
             self.peak_equity = self.equity
 
         drawdown = self.peak_equity - self.equity
 
         if drawdown > self.max_drawdown:
-
             self.max_drawdown = drawdown
 
-    # --------------------------
-    # Get Summary
-    # --------------------------
+    # ------------------------------------
+    # Summary
+    # ------------------------------------
 
     def summary(self):
 

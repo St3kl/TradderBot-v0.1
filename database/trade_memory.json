@@ -1,0 +1,330 @@
+[
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    },
+    {
+        "symbol": "BTCUSDT",
+        "strategy": "RANGE",
+        "direction": "",
+        "entry": null,
+        "stop_loss": null,
+        "take_profit": null,
+        "risk_reward": 0.0,
+        "confidence": 27.5,
+        "trend": "Range",
+        "phase": "Accumulation",
+        "confluence": 40,
+        "volume": {
+            "strength": "N/A",
+            "score": 10
+        },
+        "smart_money": {
+            "liquidity": {
+                "equal_highs": 278,
+                "equal_lows": 259
+            },
+            "order_blocks": {
+                "bullish": 24,
+                "bearish": 24
+            },
+            "fair_value_gaps": {
+                "bullish": 11,
+                "bearish": 10
+            },
+            "premium_discount": {
+                "zone": "Premium",
+                "equilibrium": 63873.05
+            },
+            "liquidity_sweep": {
+                "buy_side": false,
+                "sell_side": true,
+                "type": "Sell Side Sweep"
+            }
+        },
+        "decision": "WAIT"
+    }
+]

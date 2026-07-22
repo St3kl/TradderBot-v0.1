@@ -1,4 +1,4 @@
-from app.analytics.drawdown import DrawdownEngine
+from Tradderbot_v01.app.analysis.drawdown import DrawdownEngine
 
 engine = DrawdownEngine()
 

@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from app.analytics.metrics import MetricsEngine
+from Tradderbot_v01.app.analysis.metrics import MetricsEngine
 
 
 metrics = MetricsEngine()

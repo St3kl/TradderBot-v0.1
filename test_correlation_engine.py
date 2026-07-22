@@ -1,27 +1,24 @@
-from app.portfolio.correlation_engine import CorrelationEngine
+from app.intelligence.correlation_engine import CorrelationEngine
+
+
+class Dummy:
+    pass
+
+
+session = Dummy()
+
+session.multi_timeframe = {
+
+    "15m": "Bullish",
+
+    "1h": "Bullish",
+
+    "4h": "Bullish",
+
+    "1d": "Bearish",
+
+}
 
 engine = CorrelationEngine()
 
-symbols = [
-
-    "BTCUSDT",
-
-    "ETHUSDT",
-
-    "EURUSD",
-
-    "XAUUSD"
-
-]
-
-for symbol in symbols:
-
-    print(
-
-        symbol,
-
-        "->",
-
-        engine.group(symbol)
-
-    )
+print(engine.evaluate(session))

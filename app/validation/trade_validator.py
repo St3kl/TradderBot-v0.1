@@ -53,7 +53,7 @@ def validate_trade(
 
     zone = smart_money["premium_discount"]["zone"]
 
-    if structure["trend"] == "Bullish":
+    if structure.trend== "Bullish":
 
         if zone != "Discount":
 

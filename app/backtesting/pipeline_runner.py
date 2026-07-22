@@ -1,13 +1,12 @@
-from app.core.registry import engine
-
-
 class PipelineRunner:
     """
     Executes the complete TradderBot pipeline during backtesting.
     """
 
-    def analyze(self, symbol):
+    def __init__(self, trading_engine):
 
-        session = engine.analyze(symbol)
+        self.engine = trading_engine
 
-        return session
+    def analyze(self, context, balance,):
+
+        return self.engine.analyze(context, balance=balance,)

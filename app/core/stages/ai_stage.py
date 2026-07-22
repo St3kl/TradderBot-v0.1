@@ -17,7 +17,13 @@ class AIStage:
 
             try:
 
-                session.ai_report = self.ai.analyze(session)
+                # session.ai_report = self.ai.analyze(session)
+                report = self.ai.analyze(session)
+
+                session.ai["report"] = report
+
+                # compatibility
+                session.ai_report = report
 
             except Exception as e:
 

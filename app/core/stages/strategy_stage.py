@@ -11,4 +11,6 @@ class StrategyStage:
 
         print("Running Strategy Stage")
 
-        return self.engine.execute(session)
+        session = self.engine.evaluate(session)
+
+        return session

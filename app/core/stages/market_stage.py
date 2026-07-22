@@ -2,49 +2,103 @@ from app.market.indicators import get_market_indicators
 from app.market.forex_indicators import get_forex_indicators
 from app.market.regime_engine import RegimeEngine
 from app.strategy.strategy_selector import StrategySelector
+# from app.market.replay_data_provider import ReplayDataProvider
+
+
+# class MarketStage:
+
+#     def run(self, session):
+
+#         symbol = session.symbol
+
+# # ---------------------------------
+# # Backtesting
+# # ---------------------------------
+
+#         if getattr(session, "replay_candles", None):
+
+#             session.indicators = ReplayDataProvider.get(
+#             session.replay_candles
+#         )
+
+# # ---------------------------------
+# # Live Market
+# # ---------------------------------
+
+#         elif symbol.endswith("USDT"):
+
+#             session.indicators = get_market_indicators(
+#             symbol
+#         )
+
+#         else:
+
+#             forex_symbol = symbol[:3] + "/" + symbol[3:]
+
+#             session.indicators = get_forex_indicators(
+#             forex_symbol
+#         )
+
+#         # ---------------------------------
+#         # Detect Market Regime
+#         # ---------------------------------
+
+#         regime = RegimeEngine()
+
+#         session.market_regime = regime.classify(
+#             session.indicators
+#         )
+
+#         # ---------------------------------
+#         # Select Strategy
+#         # ---------------------------------
+
+#         selector = StrategySelector()
+
+#         session.strategy = selector.select(
+#             session.market_regime
+            
+#         )
+
+#         print("Market Regime:", session.market_regime)
+#         print("Selected Strategy:", session.strategy)
+#         print("✓ Market loaded")
+
+#         return session
 
 
 class MarketStage:
 
     def run(self, session):
 
-        symbol = session.symbol
+        print("Running Market Stage")
 
-        if symbol.endswith("USDT"):
+        candle = session.replay.candle
 
-            session.indicators = get_market_indicators(symbol)
+        session.market = candle
 
-        else:
+        session.indicators = {
 
-            forex_symbol = symbol[:3] + "/" + symbol[3:]
+            "price": candle["close"],
 
-            session.indicators = get_forex_indicators(
-                forex_symbol
-            )
+            "ema50": candle["ema50"],
 
-        # ---------------------------------
-        # Detect Market Regime
-        # ---------------------------------
+            "ema200": candle["ema200"],
 
-        regime = RegimeEngine()
+            "rsi": candle["rsi"],
 
-        session.market_regime = regime.classify(
-            session.indicators
-        )
+            "atr": candle["atr"],
 
-        # ---------------------------------
-        # Select Strategy
-        # ---------------------------------
+            "adx": candle["adx"],
 
-        selector = StrategySelector()
+            "open": candle["open"],
 
-        session.strategy = selector.select(
-            session.market_regime
-            
-        )
+            "high": candle["high"],
 
-        print("Market Regime:", session.market_regime)
-        print("Selected Strategy:", session.strategy)
-        print("✓ Market loaded")
+            "low": candle["low"],
+
+            "volume": candle["volume"]
+
+        }
 
         return session

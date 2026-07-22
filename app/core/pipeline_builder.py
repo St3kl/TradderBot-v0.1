@@ -1,5 +1,6 @@
 from app.core.pipeline import TradingPipeline
 from app.core.stage_registry import StageRegistry
+from app.core.stages.decision_stage import DecisionStage
 
 
 class PipelineBuilder:

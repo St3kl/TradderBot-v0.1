@@ -1,7 +1,15 @@
-class BaseStrategy:
+from abc import ABC, abstractmethod
+
+
+class BaseStrategy(ABC):
 
     name = "BASE"
 
-    def execute(self, session):
+    @abstractmethod
+    def evaluate(self, session):
+        """
+        Receives the trading session.
 
-        return session
+        Returns the updated session.
+        """
+        pass

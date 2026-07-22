@@ -1,17 +1,77 @@
-from app.testing.base_test import BaseTest
+from app.learning.stages.memory_stage import MemoryStage
+from app.learning.stages.statistics_stage import StatisticsStage
+from app.learning.stages.recommendation_stage import RecommendationStage
+from app.learning.stages.optimization_stage import OptimizationStage
+
+from app.logger.logger import Logger
+
+logger = Logger.get("LearningEngine")
 
 
-class TestLearning(BaseTest):
+class LearningEngine:
 
-    def run(self):
+    def __init__(self, adaptive_config):
 
-        self.title("LEARNING ENGINE")
+        self.config = adaptive_config
 
-        trade = self.trade()
+        self.memory = MemoryStage()
 
-        result = self.learning.learn(trade)
+        self.statistics_stage = StatisticsStage()
 
-        self.show(result)
+        self.recommendation = RecommendationStage()
 
+        self.optimization = OptimizationStage()
 
-TestLearning().run()
+    # ---------------------------------
+
+    def learn(self, trade):
+
+        print()
+        print("========== LEARNING ==========")
+
+        # Memory
+
+        self.memory.process(trade)
+
+        # Statistics
+
+        self.statistics_stage.process(trade)
+
+        # Recommendation
+
+        recommendation = self.recommendation.process(
+            trade
+        )
+
+        # Optimization
+
+        optimized = self.optimization.process(
+            recommendation
+        )
+
+        # Store latest optimized parameters
+
+        self.config.update(optimized)
+
+        logger.info("Learning Complete")
+
+        return optimized
+
+    # ---------------------------------
+    # Statistics used by Backtest Report
+    # ---------------------------------
+
+    def statistics(self):
+
+        return {
+
+            "strategy":
+                self.statistics_stage.strategy_statistics(),
+
+            "market":
+                self.statistics_stage.market_statistics(),
+
+            "ai":
+                self.statistics_stage.ai_statistics()
+
+        }

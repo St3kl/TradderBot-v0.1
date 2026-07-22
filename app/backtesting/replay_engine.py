@@ -4,12 +4,18 @@ class ReplayEngine:
     """
 
     def __init__(self):
+        
+        self.symbol = ""
 
         self.candles = []
 
         self.index = 0
 
-    def load(self, candles):
+    # --------------------------------
+
+    def load(self, candles, symbol):
+
+        self.symbol = symbol
 
         self.candles = candles
 
@@ -17,9 +23,13 @@ class ReplayEngine:
 
         print(f"Loaded {len(candles)} candles")
 
+    # --------------------------------
+
     def has_next(self):
 
         return self.index < len(self.candles)
+
+    # --------------------------------
 
     def next(self):
 
@@ -32,6 +42,38 @@ class ReplayEngine:
         self.index += 1
 
         return candle
+
+    # --------------------------------
+
+    def current(self):
+
+        if self.index == 0:
+
+            return None
+
+        return self.candles[self.index - 1]
+
+    # --------------------------------
+
+    def previous(self):
+
+        if self.index <= 1:
+
+            return None
+
+        return self.candles[self.index - 2]
+
+    # --------------------------------
+
+    def next_candle(self):
+
+        if self.index >= len(self.candles):
+
+            return None
+
+        return self.candles[self.index]
+
+    # --------------------------------
 
     def reset(self):
 

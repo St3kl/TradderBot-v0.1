@@ -14,15 +14,15 @@ def build_checklist(
     checklist["EMA Trend"] = bullish
 
     checklist["Market Structure"] = (
-        structure["trend"] == "Bullish"
+        structure.trend == "Bullish"
     )
 
     checklist["Bullish BOS"] = (
-        structure["bos"]["type"] == "Bullish BOS"
+        structure.bullish_bos == "Bullish BOS"
     )
 
     checklist["Bullish CHoCH"] = (
-        structure["choch"]["type"] == "Bullish CHoCH"
+        structure.bullish_choch == "Bullish CHoCH"
     )
 
     checklist["Discount Zone"] = (

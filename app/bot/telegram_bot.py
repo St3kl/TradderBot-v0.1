@@ -5,7 +5,7 @@ from telegram.ext import (
     ContextTypes
 )
 
-from app.services.analysis_service import (
+from Tradderbot_v01.app.database.services.analysis_service import (
     analyze_symbol
 )
 

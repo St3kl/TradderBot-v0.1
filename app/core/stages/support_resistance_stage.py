@@ -1,4 +1,4 @@
-from app.patterns.support_resistance import find_support_resistance
+from app.market.patterns.support_resistance import find_support_resistance
 
 
 class SupportResistanceStage:
@@ -7,9 +7,9 @@ class SupportResistanceStage:
 
         print("Running Support/Resistance Stage")
 
-        levels = find_support_resistance(
-            session.indicators["closes"]
-        )
+        closes = [c["close"] for c in session.replay.dataset]
+
+        levels = find_support_resistance(closes)
 
         session.sr.update(levels)
 

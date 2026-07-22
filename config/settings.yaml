@@ -1,0 +1,19 @@
+application:
+  name: TradderBot
+  mode: paper
+
+portfolio:
+  initial_balance: 10000
+
+risk:
+  risk_percent: 1
+
+execution:
+  slippage: 0.0002
+  commission: 0.0004
+
+learning:
+  enabled: true
+
+backtesting:
+  dataset: datasets/BTCUSDT.csv

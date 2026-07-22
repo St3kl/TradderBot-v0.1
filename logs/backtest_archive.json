@@ -1,0 +1,13 @@
+[
+    {
+        "timestamp": "2026-07-21T20:30:13.227211",
+        "report": {
+            "portfolio": {
+                "balance": 10450
+            },
+            "performance": {
+                "winrate": 62
+            }
+        }
+    }
+]

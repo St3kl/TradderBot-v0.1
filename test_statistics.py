@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from app.analytics.statistics import StatisticsEngine
+from Tradderbot_v01.app.analysis.statistics import StatisticsEngine
 
 
 stats = StatisticsEngine()

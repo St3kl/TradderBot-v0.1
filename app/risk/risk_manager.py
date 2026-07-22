@@ -1,73 +1,94 @@
-from app.risk.position_sizing import calculate_position_size
-from app.risk.portfolio import calculate_portfolio_risk
-from app.risk.exposure import analyze_exposure
+from app.risk.drawdown_guard import DrawdownGuard
+from app.risk.daily_loss_guard import DailyLossGuard
+from app.risk.exposure_manager import ExposureManager
+from app.risk.portfolio_heat import PortfolioHeat
+from app.risk.trading_window_guard import TradingWindowGuard
 
 
 class RiskManager:
+    """
+    Centralized institutional risk engine.
+    """
 
-    def evaluate(
-        self,
-        balance,
-        risk_percent,
-        trade,
-        open_positions
-    ):
+    def __init__(self):
 
-        position = calculate_position_size(
+        self.drawdown = DrawdownGuard()
+        self.daily = DailyLossGuard()
+        self.exposure = ExposureManager()
+        self.heat = PortfolioHeat()
+        self.window = TradingWindowGuard()
 
-            balance=balance,
+    def evaluate(self, session, portfolio, open_positions):
 
-            risk_percent=risk_percent,
+        checks = []
 
-            entry=trade["entry"],
+        # -----------------------
+        # Drawdown
+        # -----------------------
 
-            stop_loss=trade["stop_loss"]
+        checks.append(
+
+            self.drawdown.evaluate(portfolio)
 
         )
 
-        portfolio = calculate_portfolio_risk(
-            open_positions
+        # -----------------------
+        # Daily Loss
+        # -----------------------
+
+        checks.append(
+
+            self.daily.evaluate(portfolio)
+
         )
 
-        exposure = analyze_exposure(
-            open_positions
+        # -----------------------
+        # Exposure
+        # -----------------------
+
+        checks.append(
+
+            self.exposure.evaluate(open_positions)
+
         )
 
-        approved = True
+        # -----------------------
+        # Portfolio Heat
+        # -----------------------
+
+        checks.append(
+
+            self.heat.evaluate(open_positions)
+
+        )
+
+        # -----------------------
+        # Trading Window
+        # -----------------------
+
+        checks.append(
+
+            self.window.evaluate(session)
+
+        )
 
         reasons = []
 
-        # -----------------------------
-        # Portfolio Risk Limit
-        # -----------------------------
+        for result in checks:
 
-        if portfolio["total_risk"] >= balance * 0.05:
+            if not result["allowed"]:
 
-            approved = False
+                reason = result.get("reason")
 
-            reasons.append(
-                "Maximum portfolio risk exceeded."
-            )
+                if reason:
 
-        # -----------------------------
-        # Net Exposure
-        # -----------------------------
+                    reasons.append(reason)
 
-        if abs(exposure["net_exposure"]) >= balance * 0.03:
-
-            reasons.append(
-                "High directional exposure."
-            )
+                reasons.extend(result.get("reasons", []))
 
         return {
 
-            "approved": approved,
-
-            "position": position,
-
-            "portfolio": portfolio,
-
-            "exposure": exposure,
+            "allowed": len(reasons) == 0,
 
             "reasons": reasons
 
