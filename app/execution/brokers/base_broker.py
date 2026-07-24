@@ -16,19 +16,7 @@ class BaseBroker(ABC):
         pass
 
     @abstractmethod
-    def place_order(self, order):
-        pass
-
-    @abstractmethod
-    def modify_order(self, order):
-        pass
-
-    @abstractmethod
-    def cancel_order(self, broker_order_id):
-        pass
-
-    @abstractmethod
-    def get_order(self, broker_order_id):
+    def get_balance(self):
         pass
 
     @abstractmethod
@@ -36,5 +24,17 @@ class BaseBroker(ABC):
         pass
 
     @abstractmethod
-    def get_balance(self):
+    def place_order(self, order):
+        pass
+
+    @abstractmethod
+    def cancel_order(self, broker_order_id):
+        pass
+
+    @abstractmethod
+    def modify_order(self, broker_order_id, changes):
+        pass
+
+    @abstractmethod
+    def close_position(self, broker_order_id):
         pass

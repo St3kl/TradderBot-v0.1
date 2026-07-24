@@ -1,18 +1,17 @@
 from app.execution.brokers.base_broker import BaseBroker
 
 
-class MockBroker(BaseBroker):
-
-    
+class OandaBroker(BaseBroker):
 
     def __init__(self):
 
         self.connected = False
+        self.balance = 0
+        self.positions = []
 
     def connect(self):
 
         self.connected = True
-
         return True
 
     def disconnect(self):
@@ -23,39 +22,49 @@ class MockBroker(BaseBroker):
 
         return self.connected
 
+    def get_balance(self):
+
+        return self.balance
+
+    def get_positions(self):
+
+        return self.positions
+
     def place_order(self, order):
 
         return {
 
             "success": True,
 
-            "broker_order_id": "MOCK-000001"
+            "broker": "OANDA",
+
+            "broker_order_id": "OA-000001",
+
+            "order": order
 
         }
-
-    def modify_order(self, order):
-
-        return True
 
     def cancel_order(self, broker_order_id):
 
-        return True
-
-    def get_order(self, broker_order_id):
-
         return {
 
-            "status": "FILLED"
+            "success": True,
+
+            "broker_order_id": broker_order_id
 
         }
 
-    def get_positions(self):
+    def modify_order(self, broker_order_id, changes):
 
-        return []
+        return {
 
-    def get_balance(self):
+            "success": True,
 
-        return 100000
+            "broker_order_id": broker_order_id,
+
+            "changes": changes
+
+        }
 
     def close_position(self, broker_order_id):
 
@@ -65,4 +74,4 @@ class MockBroker(BaseBroker):
 
             "broker_order_id": broker_order_id
 
-        }    
+        }
